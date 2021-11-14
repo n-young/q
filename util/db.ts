@@ -126,18 +126,6 @@ export function getQueuesByCourse(course: string) {
     );
 }
 
-export function addTicketToQueue(queue_id: string, ticket_id: string) {
-    return updateDoc(doc(firestore, QUEUES, queue_id), {
-        tickets: arrayUnion(ticket_id)
-    })
-}
-
-export function removeTicketFromQueue(queue_id: string, ticket_id: string) {
-    return updateDoc(doc(firestore, QUEUES, queue_id), {
-        tickets: arrayRemove(ticket_id)
-    })
-}
-
 export function removeQueue(id: string) {
     getQueue(id).then(q => {
         if (!q) return
@@ -154,9 +142,12 @@ export function removeQueue(id: string) {
 
 export function createTicket(
     student: string,
-    message: string
+    message: string,
+    queue_id: string
 ) {
-    return setTicket(uuidv4(), student, message);
+    const id = uuidv4();
+    setTicket(id, student, message);
+    addTicketToQueue(queue_id, id)
 }
 
 export function setTicket(
@@ -177,4 +168,16 @@ export function getTicket(id: string) {
 
 export function removeTicket(id: string) {
     return deleteDoc(doc(firestore, TICKETS, id))
+}
+
+export function addTicketToQueue(queue_id: string, ticket_id: string) {
+    return updateDoc(doc(firestore, QUEUES, queue_id), {
+        tickets: arrayUnion(ticket_id)
+    })
+}
+
+export function removeTicketFromQueue(queue_id: string, ticket_id: string) {
+    return updateDoc(doc(firestore, QUEUES, queue_id), {
+        tickets: arrayRemove(ticket_id)
+    })
 }
