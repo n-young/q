@@ -74,7 +74,7 @@ export default function NewTicket({ qid }: NewTicketProps) {
     return (
         <>
             <TicketModal qid={qid} isOpen={modalIsOpen} closeModal={closeModal} />
-            <div className={styles.newticket}>
+            <div className={styles.ticket}>
                 <button onClick={openModal}>New Ticket</button>
             </div>
         </>

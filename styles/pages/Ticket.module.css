@@ -4,6 +4,7 @@
     padding: 0;
     display: flex;
     flex-direction: column;
+    border-bottom: 1px black solid;
 }
 
 .list:first-child {
@@ -17,14 +18,4 @@
     padding: 10px 20px;
     display: flex;
     flex-direction: column;
-}
-
-.newticket {
-    border: 1px black solid;
-    margin: 0;
-    padding: 10px 20px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-end;
 }
