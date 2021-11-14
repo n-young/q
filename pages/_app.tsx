@@ -1,7 +1,13 @@
+import React from "react"
 import '../styles/normalize.css'
 import '../styles/globals.css'
 
-function MyApp({ Component, pageProps }) {
+interface MyAppProps {
+    Component: any
+    pageProps: any
+}
+
+function MyApp({ Component, pageProps }: MyAppProps) {
   return <Component {...pageProps} />
 }
 

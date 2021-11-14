@@ -52,6 +52,7 @@ button {
     width: 100px;
     border: none;
     padding: 10px;
+    margin: 10px 0;
     color: var(--color-white);
     background-color: var(--color-accent);
     font-weight: 800;

@@ -1,7 +1,7 @@
 import React from "react";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
-import { doc, setDoc } from "firebase/firestore";
-import { auth, firestore } from "../util/firebase";
+import { auth } from "../util/firebase";
+import { persistUser } from "../util/db";
 
 export function SignIn() {
     const signInWithGoogle = () => {
@@ -11,10 +11,10 @@ export function SignIn() {
             const userData = res.user;
             const user = {
                 id: userData.uid,
-                email: userData.email,
-                name: userData.displayName,
+                email: userData.email || "",
+                name: userData.displayName || "",
             };
-            setDoc(doc(firestore, "users", userData.uid), user);
+            persistUser(userData.uid, user)
         });
     };
 
