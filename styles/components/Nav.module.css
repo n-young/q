@@ -1,0 +1,9 @@
+.nav {
+    width: var(--md-width);
+    padding: 20px 10px;
+    margin: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
