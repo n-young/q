@@ -1,10 +1,10 @@
-export type UserType = {
+export interface UserType {
     id: string
     email: string
     name: string 
 }
 
-export type CourseType = {
+export interface CourseType {
     id: string
     name: string
     code: string
@@ -12,15 +12,23 @@ export type CourseType = {
     tas: string[]
 }
 
-export type QueueType = {
+export interface QueueType {
     id: string
     course: string
     location: string
     tickets: string[]
 }
 
-export type TicketType = {
+export enum TicketStatus {
+    Unclaimed,
+    Claimed,
+    Missing,
+    Resolved
+}
+
+export interface TicketType {
     id: string
     student: string
     message: string
+    status: TicketStatus
 }

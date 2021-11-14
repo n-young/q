@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Modal from "react-modal";
 import { createQueue } from "../../util/db";
-import styles from "../../styles/pages/Queue.module.css";
+import styles from "./Queue.module.css";
 
 interface QueueModalProps {
     isOpen: boolean;
@@ -30,12 +30,14 @@ function QueueModal(props: QueueModalProps) {
             isOpen={props.isOpen}
             onRequestClose={props.closeModal}
             style={modalStyle}
-            contentLabel="Example Modal"
+            contentLabel="Create a new Queue"
         >
             <h2>Create a New Queue</h2>
             <form
                 onSubmit={(e) => {
                     createQueue(course, location);
+                    setCourse("")
+                    setLocation("")
                     props.closeModal();
                     e.preventDefault();
                 }}
@@ -45,6 +47,7 @@ function QueueModal(props: QueueModalProps) {
                     <input
                         value={course}
                         onChange={(x) => setCourse(x.target.value)}
+                        autoFocus={true}
                     />
                     <label>Location: </label>
                     <input

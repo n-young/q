@@ -1,7 +1,7 @@
 import React, { ReactElement } from "react";
 import { useRouter } from 'next/router'
 import { QueueType } from "../../util/types";
-import styles from "../../styles/pages/Queue.module.css"
+import styles from "./Queue.module.css"
 
 interface QueueProps {
     queue: QueueType;

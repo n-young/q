@@ -1,0 +1,51 @@
+.list {
+    background-color: var(--color-white);
+    margin: 10px 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    border-bottom: 1px black solid;
+}
+
+.list:first-child {
+    border-radius: 15px 15px 0 0;
+}
+
+.ticket {
+    background-color: var(--color-off-white);
+    border: 1px black solid;
+    border-bottom: none;
+    margin: 0;
+    padding: 10px 20px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    transition: background-color 0.1s linear;
+}
+
+.ticket:hover {
+    background-color: var(--color-white);
+}
+
+.ticket > div > button {
+    margin: 0 5px;
+}
+
+.info {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.info > button {
+    margin-right: 20px
+}
+
+.unclaimed {
+    background-color: var(--color-white);
+    color: var(--color-black);
+    border: 1px var(--color-black) solid;
+}

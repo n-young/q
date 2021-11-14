@@ -146,19 +146,21 @@ export function createTicket(
     queue_id: string
 ) {
     const id = uuidv4();
-    setTicket(id, student, message);
+    setTicket(id, student, message, T.TicketStatus.Unclaimed);
     addTicketToQueue(queue_id, id)
 }
 
 export function setTicket(
     id: string,
     student: string,
-    message: string
+    message: string,
+    status: T.TicketStatus
 ) {
     return setDoc(doc(firestore, TICKETS, id), {
         id: id,
         student: student,
         message: message,
+        status: status
     });
 }
 
@@ -177,7 +179,14 @@ export function addTicketToQueue(queue_id: string, ticket_id: string) {
 }
 
 export function removeTicketFromQueue(queue_id: string, ticket_id: string) {
-    return updateDoc(doc(firestore, QUEUES, queue_id), {
+    updateDoc(doc(firestore, QUEUES, queue_id), {
         tickets: arrayRemove(ticket_id)
+    })
+    removeTicket(ticket_id)
+}
+
+export function setTicketStatus(id: string, status: T.TicketStatus) {
+    return updateDoc(doc(firestore, TICKETS, id), {
+        status: status
     })
 }

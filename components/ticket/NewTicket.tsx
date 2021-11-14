@@ -3,7 +3,7 @@ import Modal from "react-modal";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../../util/firebase";
 import { createTicket } from "../../util/db";
-import styles from "../../styles/pages/Ticket.module.css"
+import styles from "./Ticket.module.css"
 
 interface TicketModalProps {
     isOpen: boolean;
@@ -41,6 +41,7 @@ function TicketModal(props: TicketModalProps) {
                     if (user && user.displayName && props.qid) {
                         createTicket(user.displayName, message, props.qid);
                     }
+                    setMessage("")
                     props.closeModal();
                     e.preventDefault();
                 }}
@@ -50,6 +51,7 @@ function TicketModal(props: TicketModalProps) {
                     onChange={(x) => setMessage(x.target.value)}
                     required
                     placeholder={"message (required)"}
+                    autoFocus={true}
                 />
                 <button type="submit">join</button>
             </form>
@@ -74,9 +76,7 @@ export default function NewTicket({ qid }: NewTicketProps) {
     return (
         <>
             <TicketModal qid={qid} isOpen={modalIsOpen} closeModal={closeModal} />
-            <div className={styles.ticket}>
-                <button onClick={openModal}>New Ticket</button>
-            </div>
+            <button onClick={openModal}>Join</button>
         </>
     );
 }

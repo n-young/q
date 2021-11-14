@@ -6,7 +6,7 @@ import { auth, firestore } from "../../util/firebase";
 import { QueueIcon } from "./QueueIcon";
 import { NewQueue } from "./NewQueue";
 import { getAdminByID } from "../../util/db";
-import styles from "../../styles/pages/Queue.module.css"
+import styles from "./Queue.module.css"
 
 
 export default function QueueList() {
