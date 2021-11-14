@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Modal from "react-modal";
 import { createQueue } from "../../util/db";
-import styles from "../../styles/queue/QueueHolder.module.css";
+import styles from "../../styles/pages/Queue.module.css";
 
 interface QueueModalProps {
     isOpen: boolean;
@@ -18,6 +18,9 @@ function QueueModal(props: QueueModalProps) {
             right: "auto",
             bottom: "auto",
             marginRight: "-50%",
+            padding: "50px 100px",
+            borderRadius: "0",
+            border: "2px black solid",
             transform: "translate(-50%, -50%)",
         },
     };
@@ -37,16 +40,18 @@ function QueueModal(props: QueueModalProps) {
                     e.preventDefault();
                 }}
             >
-                <label>Course: </label>
-                <input
-                    value={course}
-                    onChange={(x) => setCourse(x.target.value)}
-                />
-                <label>Location: </label>
-                <input
-                    value={location}
-                    onChange={(x) => setLocation(x.target.value)}
-                />
+                <div className={styles.form}>
+                    <label>Course: </label>
+                    <input
+                        value={course}
+                        onChange={(x) => setCourse(x.target.value)}
+                    />
+                    <label>Location: </label>
+                    <input
+                        value={location}
+                        onChange={(x) => setLocation(x.target.value)}
+                    />
+                </div>
                 <button type="submit">create</button>
             </form>
         </Modal>
@@ -67,9 +72,12 @@ export function NewQueue() {
     return (
         <>
             <QueueModal isOpen={modalIsOpen} closeModal={closeModal} />
-            <div className={styles.queueHolder}>
+            <div
+                className={`${styles.queueHolder} ${styles.newQueueHolder}`}
+                onClick={openModal}
+            >
                 <h2>New Queue</h2>
-                <button onClick={openModal}>Create</button>
+                <p>Create a new queue</p>
             </div>
         </>
     );

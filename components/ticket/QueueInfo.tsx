@@ -1,25 +1,21 @@
-import React from "react";
-import Ticket from "./Ticket"
-import NewTicket from "./NewTicket";
+import React from "react"
 import { firestore } from "../../util/firebase";
 import { useDocumentData } from "react-firebase-hooks/firestore";
 import { doc } from "firebase/firestore";
 import styles from "../../styles/pages/Ticket.module.css"
 
-interface TicketListProps {
+interface QueueInfoProps {
     qid: string
 }
-export default function TicketList({ qid }: TicketListProps) {
+
+export default function QueueInfo({ qid }: QueueInfoProps) {
     const [queue, loading, error] = useDocumentData(
         doc(firestore, "queues", qid)
     );
 
     return !loading && queue && queue.tickets ? (
-        <div className={styles.list}>
-            {queue.tickets.map((x: string, i: number) => (
-                <Ticket key={i} tid={x} />
-            ))}
-            <NewTicket qid={qid} />
+        <div className={styles.info}>
+            <h2>Course: {queue.course}</h2>
         </div>
-    ) : <></>
+    ) : <></>    
 }

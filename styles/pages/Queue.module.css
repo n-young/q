@@ -1,0 +1,35 @@
+.info {
+
+}
+
+.queues {
+    width: var(--md-width);
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    margin: auto;
+}
+
+.queueHolder {
+    background-color: var(--color-off-white);
+    border: 2px black solid;
+    margin: 10px;
+    padding: 10px 20px;
+    display: grid;
+    cursor: pointer;
+    transition: background-color 0.1s linear;
+}
+
+.newQueueHolder {
+    border: 2px black dashed;
+}
+
+.queueHolder:hover {
+    background-color: var(--color-white);
+}
+
+.form {
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    margin: 20px 0;
+    align-items: center;
+}

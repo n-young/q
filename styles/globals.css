@@ -12,7 +12,8 @@
 
     --color-black: #303030;
     --color-white: #fcfcfc;
-    --color-accent: #FE5F55;
+    --color-off-white: #F8F8F8;
+    --color-accent: #303030;
 }
 
 html {
@@ -33,7 +34,7 @@ body {
 
 main {
     width: var(--md-width);
-    padding: 0;
+    padding: 50px 0;
     margin: auto;
     display: flex;
     flex-direction: column;
@@ -41,6 +42,17 @@ main {
 
 h1 {
   font-family: 'Josefin Sans', sans-serif;
+  font-size: 3rem;
+  margin: 0;
+  margin-top: 10px;
+}
+
+h2,
+h3,
+h4,
+h5 {
+    margin: 0;
+    margin-top: 10px;
 }
 
 a {
@@ -66,4 +78,11 @@ button {
     background-color: var(--color-accent);
     font-weight: 800;
     border-radius: 5px;
+}
+
+input {
+    padding: 5px 10px;
+    border-radius: 0;
+    border: 1px solid black;
+    margin: 5px 0
 }

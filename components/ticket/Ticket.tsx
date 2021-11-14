@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { getTicket } from "../../util/db";
 import { TicketType } from "../../util/types"
+import styles from "../../styles/pages/Ticket.module.css"
 
 interface TicketProps {
     tid: string;
@@ -22,7 +23,7 @@ export default function Ticket({ tid }: TicketProps) {
     }, [tid])
 
     return ticket ? (
-        <div>
+        <div className={styles.ticket}>
         <p>
             {ticket.student}
             </p>

@@ -1,23 +1,25 @@
 import React from "react";
 import { ToastContainer } from "react-toastify";
-import { useRouter } from 'next/router'
+import { useRouter } from "next/router";
 import Nav from "../../components/Nav";
-import TicketList from "../../components/ticket/TicketList"
+import QueueInfo from "../../components/ticket/QueueInfo";
+import TicketList from "../../components/ticket/TicketList";
 
 export default function Q() {
-    const router = useRouter()
-    const { qid } = router.query
+    const router = useRouter();
+    const { qid } = router.query;
 
     if (qid && typeof qid == "string") {
         return (
             <>
-            <ToastContainer />
-            <main>
                 <Nav />
-            <TicketList qid={qid} />
-            </main>
+                <ToastContainer />
+                <main>
+                    <QueueInfo qid={qid} />
+                    <TicketList qid={qid} />
+                </main>
             </>
-        )
+        );
     }
-    return <></>
+    return <></>;
 }
