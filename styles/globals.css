@@ -32,14 +32,6 @@ body {
     color: var(--color-black);
 }
 
-main {
-    width: var(--md-width);
-    padding: 50px 0;
-    margin: auto;
-    display: flex;
-    flex-direction: column;
-}
-
 h1 {
   font-family: 'Josefin Sans', sans-serif;
   font-size: 3rem;

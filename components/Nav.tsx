@@ -1,5 +1,4 @@
 import React from "react";
-import Head from "next/head";
 import { useRouter } from "next/router";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { useAuthState } from "react-firebase-hooks/auth";
@@ -45,7 +44,7 @@ function SignOut({ router }: any) {
         <button
             onClick={() => {
                 auth.signOut();
-                router.reload("/")
+                router.reload("/");
             }}
         >
             Sign Out
@@ -59,9 +58,6 @@ export default function Nav() {
 
     return (
         <>
-            <Head>
-                <title>Q - Get in line!</title>
-            </Head>
             <div className={styles.nav}>
                 <div className={styles.navHolder}>
                     <h1
