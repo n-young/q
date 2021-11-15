@@ -1,7 +1,6 @@
 import React from "react";
-import { ToastContainer } from "react-toastify";
 import { useRouter } from "next/router";
-import Nav from "../../components/Nav";
+import Main from "../../components/Main";
 import QueueInfo from "../../components/ticket/QueueInfo";
 import TicketList from "../../components/ticket/TicketList";
 
@@ -11,14 +10,10 @@ export default function Q() {
 
     if (qid && typeof qid == "string") {
         return (
-            <>
-                <Nav />
-                <ToastContainer />
-                <main>
-                    <QueueInfo qid={qid} />
-                    <TicketList qid={qid} />
-                </main>
-            </>
+            <Main>
+                <QueueInfo qid={qid} />
+                <TicketList qid={qid} />
+            </Main>
         );
     }
     return <></>;

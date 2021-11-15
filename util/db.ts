@@ -19,11 +19,11 @@ import * as T from "./types";
 // CONSTANTS
 // --------------------------------------------------------------------
 
-const USERS = "users"
-const ADMINS = "admins"
-const COURSES = "courses"
-const QUEUES = "queues"
-const TICKETS = "tickets"
+const USERS = "users";
+const ADMINS = "admins";
+const COURSES = "courses";
+const QUEUES = "queues";
+const TICKETS = "tickets";
 
 // --------------------------------------------------------------------
 // USERS
@@ -40,6 +40,22 @@ export function getUser(uid: string) {
 export function getAdminByID(uid: string) {
     return getDocs(
         query(collection(firestore, ADMINS), where("id", "==", uid))
+    );
+}
+
+export function isTaFor(uid: string, cid: string) {
+    return query(
+        collection(firestore, COURSES),
+        where("id", "==", cid),
+        where("tas", "array-contains", uid)
+    );
+}
+
+export function isHtaFor(uid: string, cid: string) {
+    return query(
+        collection(firestore, COURSES),
+        where("id", "==", cid),
+        where("htas", "array-contains", uid)
     );
 }
 
@@ -73,30 +89,30 @@ export function getCourse(id: string) {
 
 export function addTA(course_id: string, ta: string) {
     return updateDoc(doc(firestore, COURSES, course_id), {
-        tas: arrayUnion(ta)
-    })
+        tas: arrayUnion(ta),
+    });
 }
 
 export function removeTA(course_id: string, ta: string) {
     return updateDoc(doc(firestore, COURSES, course_id), {
-        tas: arrayRemove(ta)
-    })
+        tas: arrayRemove(ta),
+    });
 }
 
 export function addHTA(course_id: string, hta: string) {
     return updateDoc(doc(firestore, COURSES, course_id), {
-        htas: arrayUnion(hta)
-    })
+        htas: arrayUnion(hta),
+    });
 }
 
 export function removeHTA(course_id: string, hta: string) {
     return updateDoc(doc(firestore, COURSES, course_id), {
-        htas: arrayRemove(hta)
-    })
+        htas: arrayRemove(hta),
+    });
 }
 
 export function removeCourse(id: string) {
-    return deleteDoc(doc(firestore, COURSES, id))
+    return deleteDoc(doc(firestore, COURSES, id));
 }
 
 // --------------------------------------------------------------------
@@ -127,13 +143,13 @@ export function getQueuesByCourse(course: string) {
 }
 
 export function removeQueue(id: string) {
-    getQueue(id).then(q => {
-        if (!q) return
+    getQueue(id).then((q) => {
+        if (!q) return;
         for (let x of q.data()?.tickets) {
-            removeTicket(x.id)
+            removeTicket(x.id);
         }
-    })
-    deleteDoc(doc(firestore, QUEUES, id))
+    });
+    deleteDoc(doc(firestore, QUEUES, id));
 }
 
 // --------------------------------------------------------------------
@@ -147,7 +163,7 @@ export function createTicket(
 ) {
     const id = uuidv4();
     setTicket(id, student, message, T.TicketStatus.Unclaimed);
-    addTicketToQueue(queue_id, id)
+    addTicketToQueue(queue_id, id);
 }
 
 export function setTicket(
@@ -160,33 +176,33 @@ export function setTicket(
         id: id,
         student: student,
         message: message,
-        status: status
+        status: status,
     });
 }
 
 export function getTicket(id: string) {
-    return getDoc(doc(firestore, TICKETS, id))
+    return getDoc(doc(firestore, TICKETS, id));
 }
 
 export function removeTicket(id: string) {
-    return deleteDoc(doc(firestore, TICKETS, id))
+    return deleteDoc(doc(firestore, TICKETS, id));
 }
 
 export function addTicketToQueue(queue_id: string, ticket_id: string) {
     return updateDoc(doc(firestore, QUEUES, queue_id), {
-        tickets: arrayUnion(ticket_id)
-    })
+        tickets: arrayUnion(ticket_id),
+    });
 }
 
 export function removeTicketFromQueue(queue_id: string, ticket_id: string) {
     updateDoc(doc(firestore, QUEUES, queue_id), {
-        tickets: arrayRemove(ticket_id)
-    })
-    removeTicket(ticket_id)
+        tickets: arrayRemove(ticket_id),
+    });
+    removeTicket(ticket_id);
 }
 
 export function setTicketStatus(id: string, status: T.TicketStatus) {
     return updateDoc(doc(firestore, TICKETS, id), {
-        status: status
-    })
+        status: status,
+    });
 }

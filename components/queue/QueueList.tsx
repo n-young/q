@@ -6,8 +6,7 @@ import { auth, firestore } from "../../util/firebase";
 import { QueueIcon } from "./QueueIcon";
 import { NewQueue } from "./NewQueue";
 import { getAdminByID } from "../../util/db";
-import styles from "./Queue.module.css"
-
+import styles from "./Queue.module.css";
 
 export default function QueueList() {
     const [user] = useAuthState(auth);
@@ -23,8 +22,6 @@ export default function QueueList() {
             });
         }
     }, [user]);
-
-
 
     if (error) {
         return <p>An error occured.</p>;

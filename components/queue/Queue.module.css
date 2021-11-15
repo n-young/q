@@ -11,7 +11,7 @@
 
 .queueHolder {
     background-color: var(--color-off-white);
-    border: 2px black solid;
+    border: 1px black solid;
     margin: 10px;
     padding: 10px 20px;
     display: grid;
@@ -20,7 +20,7 @@
 }
 
 .newQueueHolder {
-    border: 2px black dashed;
+    border: 1px black dashed;
 }
 
 .queueHolder:hover {

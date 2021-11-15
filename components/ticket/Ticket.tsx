@@ -42,7 +42,10 @@ export default function Ticket({ qid, tid }: TicketProps) {
                 {confirm ? (
                     <button
                         className={styles.unclaimed}
-                        onClick={() => removeTicketFromQueue(qid, tid)}
+                        onClick={() => {
+                            removeTicketFromQueue(qid, tid);
+                            setConfirm(false);
+                        }}
                         onBlur={() => setConfirm(false)}
                     >
                         Confirm
