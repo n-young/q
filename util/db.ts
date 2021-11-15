@@ -44,19 +44,19 @@ export function getAdminByID(uid: string) {
 }
 
 export function isTaFor(uid: string, cid: string) {
-    return query(
+    return getDocs(query(
         collection(firestore, COURSES),
         where("id", "==", cid),
         where("tas", "array-contains", uid)
-    );
+    ));
 }
 
 export function isHtaFor(uid: string, cid: string) {
-    return query(
+    return getDocs(query(
         collection(firestore, COURSES),
         where("id", "==", cid),
         where("htas", "array-contains", uid)
-    );
+    ));
 }
 
 // --------------------------------------------------------------------

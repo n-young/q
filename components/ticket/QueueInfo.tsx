@@ -1,24 +1,17 @@
 import React from "react";
-import { useAuthState } from "react-firebase-hooks/auth";
-import { auth, firestore } from "../../util/firebase";
-import { useDocumentData } from "react-firebase-hooks/firestore";
-import { doc } from "firebase/firestore";
 import NewTicket from "./NewTicket";
 import styles from "./Ticket.module.css";
 
 interface QueueInfoProps {
-    qid: string;
+    queue: any;
+    user: any;
+    isTa: boolean;
 }
-export default function QueueInfo({ qid }: QueueInfoProps) {
-    const [user] = useAuthState(auth);
-    const [queue, loading, error] = useDocumentData(
-        doc(firestore, "queues", qid)
-    );
-
-    return !loading && queue && queue.tickets ? (
+export default function QueueInfo({ queue, user, isTa }: QueueInfoProps) {
+    return queue && queue.tickets ? (
         <div className={styles.info}>
             <h2>Course: {queue.course}</h2>
-            {user && <NewTicket qid={qid} />}
+            {user && !isTa && <NewTicket qid={queue.id} />}
         </div>
     ) : (
         <></>

@@ -40,8 +40,17 @@ function SignIn() {
     );
 }
 
-function SignOut() {
-    return <button onClick={() => auth.signOut()}>Sign Out</button>;
+function SignOut({ router }: any) {
+    return (
+        <button
+            onClick={() => {
+                auth.signOut();
+                router.reload("/")
+            }}
+        >
+            Sign Out
+        </button>
+    );
 }
 
 export default function Nav() {
@@ -61,7 +70,18 @@ export default function Nav() {
                     >
                         Q
                     </h1>
-                    {user ? <SignOut /> : <SignIn />}
+                    <div className={styles.horizontal}>
+                        {user ? (
+                            <>
+                                <p onClick={() => router.push("/settings")}>
+                                    Settings
+                                </p>
+                                <SignOut router={router} />
+                            </>
+                        ) : (
+                            <SignIn />
+                        )}
+                    </div>
                 </div>
             </div>
         </>
