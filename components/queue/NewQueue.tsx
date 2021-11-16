@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import moment from "moment-timezone"
 import Modal from "react-modal";
 import { createQueue } from "../../util/db";
 import styles from "./Queue.module.css";
@@ -86,7 +87,7 @@ function QueueModal({ isOpen, closeModal }: QueueModalProps) {
                         <option value={-1} disabled selected></option>
                         {times.map((y, i) => (
                             <option value={i} key={i}>
-                                {y.tz().format("h:mm A")}
+                                {moment.tz(y, "America/Toronto").format("h:mm A")}
                             </option>
                         ))}
                     </select>

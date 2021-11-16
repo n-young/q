@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import moment from "moment";
+import moment from "moment-timezone";
 import useSound from "use-sound";
 import claimedSound from "../../public/claimed.mp3"
 import { toast } from "react-toastify";
@@ -105,7 +105,7 @@ export default function Ticket({ qid, tid, user, isTa }: TicketProps) {
                     </p>
                     <p>
                         <strong>Submitted</strong>:{" "}
-                        {moment.utc(ticket.timestamp.toDate()).tz().format("h:mm A")}
+                        {moment.tz(moment.utc(ticket.timestamp.toDate()), "America/Toronto").format("h:mm A")}
                     </p>
                 </div>
                 <div>

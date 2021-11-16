@@ -1,5 +1,5 @@
 import React from "react";
-import moment from "moment";
+import moment from "moment-timezone";
 import { doc } from "firebase/firestore";
 import { useDocumentData } from "react-firebase-hooks/firestore";
 import { firestore } from "../../util/firebase";
@@ -39,7 +39,7 @@ export default function QueueInfo({ queue, user, isTa }: QueueInfoProps) {
                 <p>
                     Ends at:{" "}
                     <strong>
-                        {moment.utc(queue.endTime.toDate()).tz().format("h:mm A")}
+                        {moment.tz(moment.utc(queue.endTime.toDate()), "America/Toronto").format("h:mm A")}
                     </strong>
                 </p>
                 <p>
