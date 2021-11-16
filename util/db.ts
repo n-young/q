@@ -189,7 +189,6 @@ export function createQueue(
     zoomLink: string,
     endTime: Date
 ) {
-    console.log(endTime)
     return setQueue(uuidv4(), course, title, location, zoomLink, endTime);
 }
 
@@ -207,7 +206,7 @@ export function setQueue(
         title: title,
         location: location,
         zoomLink: zoomLink,
-        endTime: Timestamp.fromDate(new Date(endTime)),
+        endTime: Timestamp.fromDate(endTime),
         tickets: [],
     });
 }

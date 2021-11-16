@@ -1,4 +1,5 @@
 import React from "react";
+import moment from "moment";
 import { collection } from "firebase/firestore";
 import { useCollectionData } from "react-firebase-hooks/firestore";
 import { firestore } from "../../util/firebase";
@@ -9,7 +10,7 @@ import { useAdmin } from "../../util/hooks";
 
 export default function QueueList() {
     const [isAdmin, adminLoading] = useAdmin();
-    const [messages, loading, error] = useCollectionData(
+    const [queues, loading, error] = useCollectionData(
         collection(firestore, "queues")
     );
 
@@ -21,8 +22,8 @@ export default function QueueList() {
         <div className={styles.queues}>
             {!loading &&
                 !adminLoading &&
-                messages &&
-                messages.map((x) => {
+                queues &&
+                queues.map((x) => {
                     const q = {
                         id: x.id,
                         course: x.course,

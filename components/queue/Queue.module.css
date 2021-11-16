@@ -2,6 +2,7 @@
     width: var(--md-width);
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
+    grid-auto-rows: 1fr;
     margin: auto;
 }
 
@@ -27,6 +28,12 @@
     display: flex;
     flex-direction: column;
     margin: 20px 0;
+}
+
+.courseTitle {
+    text-overflow: ellipsis;
+    white-space: nowrap; 
+    overflow: hidden;
 }
 
 .form {

@@ -69,7 +69,7 @@ button {
     min-width: 100px;
     border: none;
     padding: 10px 20px;
-    margin: 10px 0;
+    margin: 10px 2px;
     color: var(--color-white);
     background-color: var(--color-accent);
     font-weight: 800;

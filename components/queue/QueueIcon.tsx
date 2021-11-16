@@ -23,9 +23,9 @@ export default function QueueIcon({
             className={styles.queueHolder}
             onClick={() => router.push(`/q/${queue.id}`)}
         >
-            <h2>{course.code}</h2>
+            <h2 className={styles.courseTitle}>{course.code} : {queue.title}</h2>
             <div className={styles.queueInfo}>
-                <p>Ends at: <strong>{moment(queue.endTime).format("h:MM A")}</strong></p>
+                <p>Ends at: <strong>{moment(queue.endTime).format("h:mm A")}</strong></p>
                 <p>Currently <strong>{queue.tickets.length}</strong> students in line</p>
             </div>
         </div>
