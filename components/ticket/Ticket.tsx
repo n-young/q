@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import moment from "moment-timezone";
 import useSound from "use-sound";
-import claimedSound from "../../public/claimed.mp3"
 import { toast } from "react-toastify";
 import { setTicketStatus, removeTicketFromQueue } from "../../util/db";
 import { firestore } from "../../util/firebase";
@@ -75,7 +74,7 @@ export default function Ticket({ qid, tid, user, isTa }: TicketProps) {
         doc(firestore, "tickets", tid)
     );
     const mine = ticket?.studentId === user.uid;
-    const [dingding] = useSound(claimedSound)
+    const [dingding] = useSound("/claimed.mp3");
 
     const [claimed, setClaimed] = useState(false);
     useEffect(() => {
@@ -84,14 +83,14 @@ export default function Ticket({ qid, tid, user, isTa }: TicketProps) {
                 position: "top-center",
                 type: "success",
             });
-            dingding()
+            dingding();
             setClaimed(true);
         }
 
         if (ticket?.status === TicketStatus.Unclaimed && claimed) {
             setClaimed(false);
         }
-    }, [ticket?.status]);
+    }, [ticket?.status, claimed, dingding]);
 
     return ticket ? (
         <div className={styles.ticket}>
@@ -105,7 +104,12 @@ export default function Ticket({ qid, tid, user, isTa }: TicketProps) {
                     </p>
                     <p>
                         <strong>Submitted</strong>:{" "}
-                        {moment.tz(moment.utc(ticket.timestamp.toDate()), "America/Toronto").format("h:mm A")}
+                        {moment
+                            .tz(
+                                moment.utc(ticket.timestamp.toDate()),
+                                "America/Toronto"
+                            )
+                            .format("h:mm A")}
                     </p>
                 </div>
                 <div>

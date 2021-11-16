@@ -25,7 +25,7 @@ export default function Q() {
     if (qid && !loading && !taLoading && typeof qid == "string") {
         return (
             <Main>
-                <QueueInfo queue={queue} user={user} isTa={isTa} isSignedUp={isSignedUp} />
+                <QueueInfo queue={queue} user={user} isTa={isTa} />
                 <TicketList queue={queue} user={user} isTa={isTa} />
             </Main>
         );
