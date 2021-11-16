@@ -40,12 +40,12 @@ export default function QueueInfo({ queue, user, isTa }: QueueInfoProps) {
                     Ends at:{" "}
                     <strong>
                         {moment.tz(moment.utc(queue.endTime.toDate()), "America/Toronto").format("h:mm A")}
-                    </strong>
+                    </strong>.
                 </p>
                 <p>
                     Currently <strong>{queue.tickets.length}</strong> student
                     {queue.tickets.length === 1 ? " " : "s "}
-                    in line
+                    in line.
                 </p>
             </div>
             {queue.zoomLink && (
@@ -54,7 +54,7 @@ export default function QueueInfo({ queue, user, isTa }: QueueInfoProps) {
                         Zoom link:{" "}
                         <strong>
                             <a href={queue.zoomLink}>{queue.zoomLink}</a>
-                        </strong>
+                        </strong>.
                     </p>
                 </div>
             )}

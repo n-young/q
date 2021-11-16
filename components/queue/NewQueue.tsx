@@ -114,7 +114,7 @@ export default function NewQueue() {
                 onClick={() => setIsOpen(true)}
             >
                 <h2>New Queue</h2>
-                <p>Create a new queue</p>
+                <p>Create a new queue.</p>
                 <p></p>
             </div>
         </>

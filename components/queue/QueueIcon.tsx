@@ -1,5 +1,5 @@
 import React, { ReactElement } from "react";
-import moment from "moment-timezone"
+import moment from "moment-timezone";
 import { doc } from "firebase/firestore";
 import { useDocumentData } from "react-firebase-hooks/firestore";
 import { firestore } from "../../util/firebase";
@@ -17,18 +17,34 @@ export default function QueueIcon({
     const [course, loading, error] = useDocumentData(
         doc(firestore, "courses", queue.course || "dummy")
     );
-    const ended = queue.endTime < new Date()
+    const ended = queue.endTime < new Date();
 
     return !loading && course ? (
         <div
-            className={`${styles.queueHolder} ${ended ? styles.queueExpired : ""}`}
+            className={`${styles.queueHolder} ${
+                ended ? styles.queueExpired : ""
+            }`}
             onClick={() => router.push(`/q/${queue.id}`)}
         >
-            <h2 className={styles.courseTitle}>{course.code} : {queue.title}</h2>
+            <h2 className={styles.courseTitle}>
+                {course.code} : {queue.title}
+            </h2>
             <div className={styles.queueInfo}>
-                <p>{ended ? "Ended" : "Ends"} at: <strong>{moment.tz(moment.utc(queue.endTime), "America/Toronto").format("h:mm A")}</strong></p>
-                <p>Currently <strong>{queue.tickets.length}</strong> students in line</p>
+                <p>
+                    {ended ? "Ended" : "Ends"} at:{" "}
+                    <strong>
+                        {moment
+                            .tz(moment.utc(queue.endTime), "America/Toronto")
+                            .format("h:mm A")}
+                    </strong>.
+                </p>
+                <p>
+                    Currently <strong>{queue.tickets.length}</strong> student
+                    {queue.tickets.length === 1 ? " " : "s "} in line.
+                </p>
             </div>
         </div>
-    ) : <></>;
+    ) : (
+        <></>
+    );
 }
