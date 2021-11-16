@@ -1,12 +1,7 @@
-.horizontal {
+.body {
     display: flex;
-    flex-direction: row;
-    align-items: center;
-}
-
-.horizontal > p {
-    margin-right: 20px;
-    cursor: pointer;
+    min-height: 100vh;
+    flex-direction: column;
 }
 
 .main {
@@ -29,14 +24,19 @@
     align-items: center;
 }
 
-.icon {
-    cursor: pointer
+.navItems {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
 }
 
-.flexer {
-    display: flex;
-    min-height: 100vh;
-    flex-direction: column;
+.navItems > p {
+    margin-right: 20px;
+    cursor: pointer;
+}
+
+.icon {
+    cursor: pointer
 }
 
 .footer {

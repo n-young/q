@@ -41,7 +41,7 @@ const TA = ({ cid, uid, isHTA }: TAProps) => {
     );
 
     return !loading ? (
-        <div className={styles.horizontal}>
+        <div className={styles.courseInfo}>
             <TAInfo />
             <TADelete />
         </div>
@@ -61,7 +61,7 @@ export default function CourseInfo({ isAdmin, cid }: CourseInfoProps) {
 
     const TAs = () => (
         <div>
-            <div className={styles.horizontal}>
+            <div className={styles.courseInfo}>
                 <h2>TAs:</h2>
                 <NewTA cid={course.id} isHTA={false} />
             </div>
@@ -73,7 +73,7 @@ export default function CourseInfo({ isAdmin, cid }: CourseInfoProps) {
 
     const HTAs = () => (
         <div>
-            <div className={styles.horizontal}>
+            <div className={styles.courseInfo}>
                 <h2>HTAs:</h2>
                 <NewTA cid={course.id} isHTA={true} />
             </div>

@@ -3,7 +3,8 @@ import { useRouter } from "next/router";
 import { toast } from "react-toastify";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../util/firebase";
-import { getAdminByID, isTaFor, isHtaFor } from "./db";
+import { getAdminByID, isTa, isTaFor, isHta, isHtaFor } from "./db";
+import { DocumentData } from "firebase/firestore";
 
 export function useAdmin() {
     const [user, loading] = useAuthState(auth);
@@ -54,7 +55,18 @@ export function useAdminGuard() {
     return isAdmin;
 }
 
-export function useTA(queue: any) {
+export function useTA() {
+    const [user, loading] = useAuthState(auth);
+    const [isATa, setIsATa] = useState(false);
+
+    useEffect(() => {
+        if (user) isTa(user.uid).then((_) => setIsATa(true));
+    }, [user]);
+
+    return isATa;
+}
+
+export function useTAFor(queue: any) {
     const [user, loading] = useAuthState(auth);
     const [isTa, setIsTa] = useState(false);
 
@@ -72,7 +84,44 @@ export function useTA(queue: any) {
     return isTa;
 }
 
-export function useHTA(queue: any) {
+export function useHTA() {
+    const [user, loading] = useAuthState(auth);
+    const [isAnHta, setIsAnHta] = useState(false);
+
+    useEffect(() => {
+        if (user) isHta(user.uid).then((_) => setIsAnHta(true));
+    }, [user]);
+
+    return isAnHta;
+}
+
+export function useHTAGuard() {
+    const router = useRouter();
+    const [user, loading] = useAuthState(auth);
+    const isAnHTA = useHTA();
+
+    useEffect(() => {
+        if (!loading) {
+            if (!isAnHTA) {
+                toast("You must be an admin to access this page.", {
+                    position: "top-center",
+                    type: "error",
+                });
+                router.push("/");
+            } else if (!user) {
+                toast("You must be logged in to access this page.", {
+                    position: "top-center",
+                    type: "error",
+                });
+                router.push("/");
+            }
+        }
+    }, [isAnHTA, user, loading, router]);
+
+    return isAnHTA;
+}
+
+export function useHTAFor(queue: any) {
     const [user, loading] = useAuthState(auth);
     const [isHta, setIsHta] = useState(false);
 
@@ -85,4 +134,39 @@ export function useHTA(queue: any) {
     }, [queue, user]);
 
     return isHta;
+}
+
+export function useHtaCourses() {
+    const [user] = useAuthState(auth);
+    const [courses, setCourses] = useState<DocumentData[]>([]);
+
+    useEffect(() => {
+        if (user) {
+            isHta(user.uid).then((x) =>
+                setCourses(x.docs.map((x) => x.data()))
+            );
+        }
+    }, [user]);
+
+    return courses;
+}
+
+export function useTaCourses() {
+    const [user] = useAuthState(auth);
+    const [courses, setCourses] = useState<DocumentData[]>([]);
+
+    useEffect(() => {
+        if (user) {
+            let cs: DocumentData[] = [];
+            isTa(user.uid).then((x) => {
+                cs = cs.concat(x.docs.map((x) => x.data()));
+                isHta(user.uid).then((x) => {
+                    cs = cs.concat(x.docs.map((x) => x.data()));
+                    setCourses(cs);
+                });
+            });
+        }
+    }, [user]);
+
+    return courses;
 }

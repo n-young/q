@@ -1,22 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import styles from "./Settings.module.css";
 import CourseInfo from "./CourseInfo";
-import { useAuthState } from "react-firebase-hooks/auth";
-import { auth } from "../../util/firebase";
-import { isHta } from "../../util/db";
-import { DocumentData } from "@firebase/firestore";
+import { useHtaCourses } from "../../util/hooks";
 
-export default function SettingsInfo() {
-    const [user] = useAuthState(auth);
+export default function HTAPanel() {
     const [cid, setCid] = useState("");
-    const [courses, setCourses] = useState<DocumentData[]>([]);
-
-    useEffect(() => {
-        if (user)
-            isHta(user.uid).then((x) =>
-                setCourses(x.docs.map((x) => x.data()))
-            );
-    }, []);
+    const courses = useHtaCourses()
 
     const DropDown = () => (
         <select value={cid} onChange={(e) => setCid(e.target.value)}>

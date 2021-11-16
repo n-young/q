@@ -12,7 +12,7 @@ export default function Main(props: any) {
             <Head>
                 <title>Q - Get in line!</title>
             </Head>
-            <div className={styles.flexer}>
+            <div className={styles.body}>
                 <Nav />
                 <ToastContainer />
                 <main className={styles.main}>{props.children}</main>

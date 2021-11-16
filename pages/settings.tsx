@@ -1,12 +1,14 @@
 import React from "react";
-import SettingsInfo from "../components/settings/SettingsInfo";
+import HTAPanel from "../components/settings/HTAPanel";
 import Main from "../components/common/Main";
-import { useAdminGuard } from "../util/hooks";
+import { useHTAGuard } from "../util/hooks";
 
 export default function Settings() {
-    return (
+    const isAnHta = useHTAGuard()
+
+    return isAnHta && (
         <Main>
-            <SettingsInfo />
+            <HTAPanel />
         </Main>
     );
 }

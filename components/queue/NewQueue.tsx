@@ -2,35 +2,18 @@ import React, { useState, useEffect } from "react";
 import Modal from "react-modal";
 import { createQueue } from "../../util/db";
 import styles from "./Queue.module.css";
-import { useAuthState } from "react-firebase-hooks/auth";
-import { auth } from "../../util/firebase";
 import { modalStyle } from "../../util/constants";
-import { isTa, isHta } from "../../util/db";
-import { DocumentData } from "@firebase/firestore";
+import { useTaCourses } from "../../util/hooks";
 
 interface QueueModalProps {
     isOpen: boolean;
     closeModal: () => void;
 }
 function QueueModal({ isOpen, closeModal }: QueueModalProps) {
-    const [user] = useAuthState(auth);
-    const [courses, setCourses] = useState<DocumentData[]>([]);
+    const courses = useTaCourses();
     const [course, setCourse] = useState("");
     const [title, setTitle] = useState("");
     const [location, setLocation] = useState("");
-
-    useEffect(() => {
-        if (user) {
-            let cs: DocumentData[] = [];
-            isTa(user.uid).then((x) => {
-                cs = cs.concat(x.docs.map((x) => x.data()));
-                isHta(user.uid).then((x) => {
-                    cs = cs.concat(x.docs.map((x) => x.data()));
-                    setCourses(cs);
-                });
-            });
-        }
-    }, []);
 
     return (
         <Modal

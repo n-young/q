@@ -1,5 +1,5 @@
 import React from "react";
-import AdminInfo from "../components/settings/AdminInfo";
+import MTAPanel from "../components/settings/MTAPanel";
 import Main from "../components/common/Main";
 import { useAdminGuard } from "../util/hooks";
 
@@ -8,7 +8,7 @@ export default function Admin() {
 
     return isAdmin && (
         <Main>
-            <AdminInfo />
+            <MTAPanel />
         </Main>
     );
 }

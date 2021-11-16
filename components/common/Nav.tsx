@@ -5,7 +5,8 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { toast } from "react-toastify";
 import styles from "./Common.module.css";
 import { auth } from "../../util/firebase";
-import { setUser, isHta } from "../../util/db";
+import { setUser } from "../../util/db";
+import { useHTA } from "../../util/hooks";
 
 function SignIn() {
     const signInWithGoogle = () => {
@@ -54,12 +55,8 @@ function SignOut({ router }: any) {
 
 export default function Nav() {
     const [user] = useAuthState(auth);
-    const [isAnHta, setIsAnHta] = useState(false);
+    const isAnHta = useHTA()
     const router = useRouter();
-
-    useEffect(() => {
-        if (user) isHta(user.uid).then((x) => setIsAnHta(true));
-    }, []);
 
     return (
         <>
@@ -71,7 +68,7 @@ export default function Nav() {
                     >
                         Q
                     </h1>
-                    <div className={styles.horizontal}>
+                    <div className={styles.navItems}>
                         {user ? (
                             <>
                                 {isAnHta && (

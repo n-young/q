@@ -6,7 +6,7 @@ import { NewCourse } from "./NewCourse";
 import styles from "./Settings.module.css";
 import CourseInfo from "./CourseInfo";
 
-export default function SettingsInfo() {
+export default function MTAPanel() {
     const [cid, setCid] = useState("")
     const [courses, loading, error] = useCollectionData(
         collection(firestore, "courses")
@@ -23,7 +23,7 @@ export default function SettingsInfo() {
 
     return (
         <div className={styles.info}>
-            <h2>Admin Panel</h2>
+            <h2>MTA Panel</h2>
             <div className={styles.settingsBar}>
                 <NewCourse />
                 <DropDown />
