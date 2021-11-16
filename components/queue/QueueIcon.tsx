@@ -11,7 +11,7 @@ export default function QueueIcon(props: QueueProps): ReactElement<QueueProps> {
 
     return (
         <div className={styles.queueHolder} onClick={() => router.push(`/q/${props.queue.id}`)}>
-            <h2>{props.queue.course}</h2>
+            <h2>{props.queue.title}</h2>
             <p>{props.queue.location}</p>
         </div>
     );

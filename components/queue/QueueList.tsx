@@ -25,6 +25,7 @@ export default function QueueList() {
                     const q = {
                         id: x.id,
                         course: x.course,
+                        title: x.title,
                         location: x.location,
                         tickets: x.tickets,
                     };

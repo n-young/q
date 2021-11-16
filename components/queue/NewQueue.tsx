@@ -1,16 +1,36 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Modal from "react-modal";
 import { createQueue } from "../../util/db";
 import styles from "./Queue.module.css";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "../../util/firebase";
 import { modalStyle } from "../../util/constants";
+import { isTa, isHta } from "../../util/db";
+import { DocumentData } from "@firebase/firestore";
 
 interface QueueModalProps {
     isOpen: boolean;
     closeModal: () => void;
 }
 function QueueModal({ isOpen, closeModal }: QueueModalProps) {
+    const [user] = useAuthState(auth);
+    const [courses, setCourses] = useState<DocumentData[]>([]);
     const [course, setCourse] = useState("");
+    const [title, setTitle] = useState("");
     const [location, setLocation] = useState("");
+
+    useEffect(() => {
+        if (user) {
+            let cs: DocumentData[] = [];
+            isTa(user.uid).then((x) => {
+                cs = cs.concat(x.docs.map((x) => x.data()));
+                isHta(user.uid).then((x) => {
+                    cs = cs.concat(x.docs.map((x) => x.data()));
+                    setCourses(cs);
+                });
+            });
+        }
+    }, []);
 
     return (
         <Modal
@@ -22,8 +42,9 @@ function QueueModal({ isOpen, closeModal }: QueueModalProps) {
             <h2>Create a New Queue</h2>
             <form
                 onSubmit={(e) => {
-                    createQueue(course, location);
+                    createQueue(course, title, location);
                     setCourse("");
+                    setTitle("");
                     setLocation("");
                     closeModal();
                     e.preventDefault();
@@ -31,15 +52,29 @@ function QueueModal({ isOpen, closeModal }: QueueModalProps) {
             >
                 <div className={styles.form}>
                     <label>Course: </label>
-                    <input
+                    <select
                         value={course}
                         onChange={(x) => setCourse(x.target.value)}
-                        autoFocus={true}
+                        required
+                    >
+                        <option disabled value={""}></option>
+                        {courses.map((x) => (
+                            <option value={x.id} key={x.id}>
+                                {x.code}
+                            </option>
+                        ))}
+                    </select>
+                    <label>Title: </label>
+                    <input
+                        value={title}
+                        onChange={(x) => setTitle(x.target.value)}
+                        required
                     />
                     <label>Location: </label>
                     <input
                         value={location}
                         onChange={(x) => setLocation(x.target.value)}
+                        required
                     />
                 </div>
                 <button type="submit">create</button>

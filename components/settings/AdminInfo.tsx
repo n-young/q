@@ -14,7 +14,7 @@ export default function SettingsInfo() {
 
     const DropDown = () => (
         <select value={cid} onChange={(e) => setCid(e.target.value)}>
-            <option value={""}></option>
+            <option disabled value={""}></option>
             {!loading &&
                 courses &&
                 courses?.map((x) => <option value={x.id} key={x.id}>{x.code}</option>)}

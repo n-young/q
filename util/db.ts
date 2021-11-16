@@ -168,14 +168,15 @@ export function removeCourse(id: string) {
 // QUEUES
 // --------------------------------------------------------------------
 
-export function createQueue(course: string, location: string) {
-    return setQueue(uuidv4(), course, location);
+export function createQueue(course: string, title: string, location: string) {
+    return setQueue(uuidv4(), course, title, location);
 }
 
-export function setQueue(id: string, course: string, location: string) {
+export function setQueue(id: string, course: string, title: string, location: string) {
     return setDoc(doc(firestore, QUEUES, id), {
         id: id,
         course: course,
+        title: title,
         location: location,
         tickets: [],
     });

@@ -15,6 +15,7 @@ export interface CourseType {
 export interface QueueType {
     id: string
     course: string
+    title: string
     location: string
     tickets: string[]
 }
