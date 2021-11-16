@@ -10,7 +10,7 @@ import { useHTA } from "../../util/hooks";
 
 export default function Nav() {
     const [user] = useAuthState(auth);
-    const isAnHta = useHTA();
+    const [isAnHta] = useHTA();
     const router = useRouter();
 
     const SignIn = () => {
@@ -60,7 +60,7 @@ export default function Nav() {
     };
 
     const SettingsLink = () =>
-        isAnHta && <p onClick={() => router.push("/settings")}>Settings</p>;
+        isAnHta ? <p onClick={() => router.push("/settings")}>Settings</p> : <></>;
 
     return (
         <>

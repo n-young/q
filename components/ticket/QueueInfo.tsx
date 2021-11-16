@@ -41,7 +41,7 @@ export default function QueueInfo({ queue, user, isTa }: QueueInfoProps) {
     const QueueNotes = () => (
         <div className={styles.info}>
             <p>
-                Ends at:{" "}
+                {ended ? "Ended" : "Ends"} at: {" "}
                 <strong>
                     {moment
                         .tz(moment.utc(queue.endTime.toDate()), timezone)
