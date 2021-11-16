@@ -10,6 +10,7 @@ import {
     where,
     arrayUnion,
     arrayRemove,
+    Timestamp
 } from "firebase/firestore";
 import { firestore } from "./firebase";
 import { v4 as uuidv4 } from "uuid";
@@ -38,10 +39,9 @@ export function getUser(uid: string) {
 }
 
 export function getUserByEmail(email: string) {
-    return getDocs(query(
-        collection(firestore, USERS),
-        where("email", "==", email),
-    ));
+    return getDocs(
+        query(collection(firestore, USERS), where("email", "==", email))
+    );
 }
 
 export function getAdminByID(uid: string) {
@@ -51,33 +51,41 @@ export function getAdminByID(uid: string) {
 }
 
 export function isTaFor(uid: string, cid: string) {
-    return getDocs(query(
-        collection(firestore, COURSES),
-        where("id", "==", cid),
-        where("tas", "array-contains", uid)
-    ));
+    return getDocs(
+        query(
+            collection(firestore, COURSES),
+            where("id", "==", cid),
+            where("tas", "array-contains", uid)
+        )
+    );
 }
 
 export function isHtaFor(uid: string, cid: string) {
-    return getDocs(query(
-        collection(firestore, COURSES),
-        where("id", "==", cid),
-        where("htas", "array-contains", uid)
-    ));
+    return getDocs(
+        query(
+            collection(firestore, COURSES),
+            where("id", "==", cid),
+            where("htas", "array-contains", uid)
+        )
+    );
 }
 
 export function isTa(uid: string) {
-    return getDocs(query(
-        collection(firestore, COURSES),
-        where("tas", "array-contains", uid)
-    ));
+    return getDocs(
+        query(
+            collection(firestore, COURSES),
+            where("tas", "array-contains", uid)
+        )
+    );
 }
 
 export function isHta(uid: string) {
-    return getDocs(query(
-        collection(firestore, COURSES),
-        where("htas", "array-contains", uid)
-    ));
+    return getDocs(
+        query(
+            collection(firestore, COURSES),
+            where("htas", "array-contains", uid)
+        )
+    );
 }
 
 // --------------------------------------------------------------------
@@ -109,55 +117,61 @@ export function getCourse(id: string) {
 }
 
 export function addTA(course_id: string, ta: string, toast: any) {
-    getUserByEmail(ta).then(x => {
+    getUserByEmail(ta).then((x) => {
         if (x.size != 1) {
-            toast("Email not found. The TA should log in at least once first.", {
-                position: "top-center",
-                type: "error",
-            });
-            return
+            toast(
+                "Email not found. The TA should log in at least once first.",
+                {
+                    position: "top-center",
+                    type: "error",
+                }
+            );
+            return;
         }
-        const data = x.docs[0]
+        const data = x.docs[0];
         updateDoc(doc(firestore, COURSES, course_id), {
             tas: arrayUnion(data?.id),
         });
-    })
+    });
 }
 
 export function removeTA(course_id: string, ta: string) {
-    getUserByEmail(ta).then(x => {
-        if (x.size != 1) return
-        const data = x.docs[0]
+    getUserByEmail(ta).then((x) => {
+        if (x.size != 1) return;
+        const data = x.docs[0];
         updateDoc(doc(firestore, COURSES, course_id), {
             tas: arrayRemove(data?.id),
         });
-    })
+    });
 }
 
 export function addHTA(course_id: string, hta: string, toast: any) {
-    getUserByEmail(hta).then(x => {
+    getUserByEmail(hta).then((x) => {
         if (x.size != 1) {
-            toast("Email not found. The TA should log in at least once first.", {
-                position: "top-center",
-                type: "error",
-            });
-            return
+            toast(
+                "Email not found. The TA should log in at least once first.",
+                {
+                    position: "top-center",
+                    type: "error",
+                }
+            );
+            return;
         }
-        const data = x.docs[0]
+        const data = x.docs[0];
         updateDoc(doc(firestore, COURSES, course_id), {
             htas: arrayUnion(data?.id),
         });
-    })
+    });
 }
 
 export function removeHTA(course_id: string, hta: string) {
-    getUserByEmail(hta).then(x => {
-        if (x.size != 1) return
-        const data = x.docs[0]
+    getUserByEmail(hta).then((x) => {
+        if (x.size != 1) return;
+        const data = x.docs[0];
         updateDoc(doc(firestore, COURSES, course_id), {
             htas: arrayRemove(data?.id),
         });
-    })
+    });
 }
 
 export function removeCourse(id: string) {
@@ -168,16 +182,32 @@ export function removeCourse(id: string) {
 // QUEUES
 // --------------------------------------------------------------------
 
-export function createQueue(course: string, title: string, location: string) {
-    return setQueue(uuidv4(), course, title, location);
+export function createQueue(
+    course: string,
+    title: string,
+    location: string,
+    zoomLink: string,
+    endTime: Date
+) {
+    console.log(endTime)
+    return setQueue(uuidv4(), course, title, location, zoomLink, endTime);
 }
 
-export function setQueue(id: string, course: string, title: string, location: string) {
+export function setQueue(
+    id: string,
+    course: string,
+    title: string,
+    location: string,
+    zoomLink: string,
+    endTime: Date
+) {
     return setDoc(doc(firestore, QUEUES, id), {
         id: id,
         course: course,
         title: title,
         location: location,
+        zoomLink: zoomLink,
+        endTime: Timestamp.fromDate(new Date(endTime)),
         tickets: [],
     });
 }

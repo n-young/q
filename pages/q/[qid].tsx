@@ -19,9 +19,9 @@ export default function Q() {
     const [queue, loading, error] = useDocumentData(
         doc(firestore, "queues", qid)
     );
-    const isTa = useTAFor(queue);
+    const [isTa, taLoading] = useTAFor(queue);
 
-    if (qid && !loading && typeof qid == "string") {
+    if (qid && !loading && !taLoading && typeof qid == "string") {
         return (
             <Main>
                 <QueueInfo queue={queue} user={user} isTa={isTa} />

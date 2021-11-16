@@ -4,9 +4,9 @@ import Main from "../components/common/Main";
 import { useAdminGuard } from "../util/hooks";
 
 export default function Admin() {
-    const isAdmin = useAdminGuard()
+    const [isAdmin, adminLoading] = useAdminGuard()
 
-    return isAdmin && (
+    return !adminLoading && isAdmin && (
         <Main>
             <MTAPanel />
         </Main>

@@ -47,6 +47,10 @@ h5 {
     margin-top: 10px;
 }
 
+p {
+    margin: 0
+}
+
 a {
   color: inherit;
   text-decoration: none;
@@ -85,4 +89,10 @@ select {
     border: 1px solid black;
     margin: 5px 0;
     background-color: white;
+}
+
+textarea {
+    margin-top: 10px;
+    width: 400px;
+    resize: none;
 }

@@ -8,7 +8,7 @@ import styles from "./Queue.module.css";
 import { useAdmin } from "../../util/hooks";
 
 export default function QueueList() {
-    const isAdmin = useAdmin();
+    const [isAdmin, adminLoading] = useAdmin();
     const [messages, loading, error] = useCollectionData(
         collection(firestore, "queues")
     );
@@ -20,13 +20,16 @@ export default function QueueList() {
     return (
         <div className={styles.queues}>
             {!loading &&
+                !adminLoading &&
                 messages &&
-                messages.map(x => {
+                messages.map((x) => {
                     const q = {
                         id: x.id,
                         course: x.course,
                         title: x.title,
                         location: x.location,
+                        zoomLink: x.zoomLink,
+                        endTime: x.endTime.toDate(),
                         tickets: x.tickets,
                     };
                     return <QueueIcon key={x.id} queue={q} />;

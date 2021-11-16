@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Modal from "react-modal";
 import { createQueue } from "../../util/db";
 import styles from "./Queue.module.css";
-import { modalStyle } from "../../util/constants";
+import { modalStyle, nextNHours } from "../../util/constants";
 import { useTaCourses } from "../../util/hooks";
 
 interface QueueModalProps {
@@ -14,6 +14,9 @@ function QueueModal({ isOpen, closeModal }: QueueModalProps) {
     const [course, setCourse] = useState("");
     const [title, setTitle] = useState("");
     const [location, setLocation] = useState("");
+    const [zoomLink, setZoomLink] = useState("");
+    const [endTime, setEndTime] = useState(-1);
+    const times = nextNHours(12)
 
     return (
         <Modal
@@ -25,10 +28,12 @@ function QueueModal({ isOpen, closeModal }: QueueModalProps) {
             <h2>Create a New Queue</h2>
             <form
                 onSubmit={(e) => {
-                    createQueue(course, title, location);
+                    createQueue(course, title, location, zoomLink, times[endTime].toDate());
                     setCourse("");
                     setTitle("");
                     setLocation("");
+                    setZoomLink("")
+                    setEndTime(-1)
                     closeModal();
                     e.preventDefault();
                 }}
@@ -59,6 +64,25 @@ function QueueModal({ isOpen, closeModal }: QueueModalProps) {
                         onChange={(x) => setLocation(x.target.value)}
                         required
                     />
+                    <label>Zoom Link: </label>
+                    <input
+                        value={zoomLink}
+                        onChange={(x) => setZoomLink(x.target.value)}
+                        placeholder={"optional"}
+                    />
+                    <label>End Time: </label>
+                    <select
+                        value={endTime}
+                        onChange={(x) => setEndTime(parseInt(x.target.value, 10))}
+                        required
+                    >
+                        <option value={-1} disabled selected></option>
+                        {times.map((y, i) => (
+                            <option value={i} key={i}>
+                                {y.format("h:mm A")}
+                            </option>
+                        ))}
+                    </select>
                 </div>
                 <button type="submit">create</button>
             </form>

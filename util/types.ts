@@ -17,6 +17,8 @@ export interface QueueType {
     course: string
     title: string
     location: string
+    zoomLink: string
+    endTime: Date
     tickets: string[]
 }
 

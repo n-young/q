@@ -32,12 +32,13 @@ function TicketModal({ isOpen, closeModal, qid }: TicketModalProps) {
                     e.preventDefault();
                 }}
             >
-                <input
+                <textarea
                     value={message}
                     onChange={(x) => setMessage(x.target.value)}
-                    required
                     placeholder={"message (required)"}
                     autoFocus={true}
+                    rows={5}
+                    required
                 />
                 <button type="submit">join</button>
             </form>

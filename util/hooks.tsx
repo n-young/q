@@ -18,7 +18,7 @@ export function useAdmin() {
         }
     }, [user]);
 
-    return isAdmin;
+    return [isAdmin, loading];
 }
 
 export function useAdminGuard() {
@@ -52,7 +52,7 @@ export function useAdminGuard() {
         }
     }, [isAdmin, user, loading, router]);
 
-    return isAdmin;
+    return [isAdmin, loading];
 }
 
 export function useTA() {
@@ -63,7 +63,7 @@ export function useTA() {
         if (user) isTa(user.uid).then((_) => setIsATa(true));
     }, [user]);
 
-    return isATa;
+    return [isATa, loading];
 }
 
 export function useTAFor(queue: any) {
@@ -81,7 +81,7 @@ export function useTAFor(queue: any) {
         }
     }, [queue, user]);
 
-    return isTa;
+    return [isTa, loading];
 }
 
 export function useHTA() {
@@ -92,17 +92,20 @@ export function useHTA() {
         if (user) isHta(user.uid).then((_) => setIsAnHta(true));
     }, [user]);
 
-    return isAnHta;
+    return [isAnHta, loading];
 }
 
 export function useHTAGuard() {
     const router = useRouter();
     const [user, loading] = useAuthState(auth);
-    const isAnHTA = useHTA();
+    const [done, setDone] = useState(false)
 
     useEffect(() => {
-        if (!loading) {
-            if (!isAnHTA) {
+        let isAnHta = false;
+        if (user) isHta(user.uid).then((_) => {
+            isAnHta = true
+        }).then(() => {
+            if (!isAnHta) {
                 toast("You must be an admin to access this page.", {
                     position: "top-center",
                     type: "error",
@@ -114,11 +117,13 @@ export function useHTAGuard() {
                     type: "error",
                 });
                 router.push("/");
+            } else if (isAnHta){
+                setDone(true)
             }
-        }
-    }, [isAnHTA, user, loading, router]);
+        })
+    }, [router, user]);
 
-    return isAnHTA;
+    return [done, loading]
 }
 
 export function useHTAFor(queue: any) {
@@ -133,7 +138,7 @@ export function useHTAFor(queue: any) {
         }
     }, [queue, user]);
 
-    return isHta;
+    return [isHta, loading];
 }
 
 export function useHtaCourses() {

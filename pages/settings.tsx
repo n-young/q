@@ -4,9 +4,9 @@ import Main from "../components/common/Main";
 import { useHTAGuard } from "../util/hooks";
 
 export default function Settings() {
-    const isAnHta = useHTAGuard()
+    const [isAnHta, loading] = useHTAGuard()
 
-    return isAnHta && (
+    return !loading && isAnHta && (
         <Main>
             <HTAPanel />
         </Main>
