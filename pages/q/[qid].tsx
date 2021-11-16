@@ -7,26 +7,19 @@ import { useDocumentData } from "react-firebase-hooks/firestore";
 import Main from "../../components/common/Main";
 import QueueInfo from "../../components/ticket/QueueInfo";
 import TicketList from "../../components/ticket/TicketList";
-import { isTaFor, isHtaFor } from "../../util/db";
+import { useTA } from "../../util/hooks";
 
 function definitelyQid(qid: string | string[] | undefined): string {
     return (typeof qid == "string") ? qid : "dummy";
 }
 
 export default function Q() {
-    const [isTa, setIsTa] = useState(false)
     const qid = definitelyQid(useRouter().query.qid);
     const [user] = useAuthState(auth);
     const [queue, loading, error] = useDocumentData(
         doc(firestore, "queues", qid)
     );
-
-    useEffect(() => {
-        if (user && queue) {
-            isTaFor(user.uid, queue.course).then(res => res.forEach(_ => setIsTa(true)))
-            isHtaFor(user.uid, queue.course).then(res => res.forEach(_ => setIsTa(true)))
-        }
-    }, [queue, user])
+    const isTa = useTA(queue)
 
     if (qid && typeof qid == "string") {
         return (
