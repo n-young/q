@@ -56,27 +56,33 @@ export function useAdminGuard() {
 
 export function useTA(queue: any) {
     const [user, loading] = useAuthState(auth);
-    const [isTa, setIsTa] = useState(false)
+    const [isTa, setIsTa] = useState(false);
 
     useEffect(() => {
         if (user && queue) {
-            isTaFor(user.uid, queue.course).then(res => res.forEach(_ => setIsTa(true)))
-            isHtaFor(user.uid, queue.course).then(res => res.forEach(_ => setIsTa(true)))
+            isTaFor(user.uid, queue.course).then((res) =>
+                res.forEach((_) => setIsTa(true))
+            );
+            isHtaFor(user.uid, queue.course).then((res) =>
+                res.forEach((_) => setIsTa(true))
+            );
         }
-    }, [queue, user])
+    }, [queue, user]);
 
-    return isTa
+    return isTa;
 }
 
 export function useHTA(queue: any) {
     const [user, loading] = useAuthState(auth);
-    const [isHta, setIsHta] = useState(false)
+    const [isHta, setIsHta] = useState(false);
 
     useEffect(() => {
         if (user && queue) {
-            isHtaFor(user.uid, queue.course).then(res => res.forEach(_ => setIsHta(true)))
+            isHtaFor(user.uid, queue.course).then((res) =>
+                res.forEach((_) => setIsHta(true))
+            );
         }
-    }, [queue, user])
+    }, [queue, user]);
 
-    return isHta
+    return isHta;
 }

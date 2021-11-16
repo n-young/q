@@ -3,20 +3,7 @@ import Modal from "react-modal";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../../util/firebase";
 import { createTicket } from "../../util/db";
-
-const modalStyle = {
-    content: {
-        top: "30%",
-        left: "50%",
-        right: "auto",
-        bottom: "auto",
-        marginRight: "-50%",
-        padding: "50px 100px",
-        borderRadius: "0",
-        border: "1px black solid",
-        transform: "translate(-50%, -50%)",
-    },
-};
+import { modalStyle } from "../../util/constants";
 
 interface TicketModalProps {
     isOpen: boolean;

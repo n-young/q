@@ -1,0 +1,12 @@
+.form {
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    margin: 20px 0;
+    align-items: center;
+}
+
+.adminBar {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}

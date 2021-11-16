@@ -75,7 +75,7 @@ export function setCourse(
     tas: string[]
 ) {
     return setDoc(doc(firestore, COURSES, id), {
-        id: uuidv4(),
+        id: id,
         name: name,
         code: code,
         htas: htas,

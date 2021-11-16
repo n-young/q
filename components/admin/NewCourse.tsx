@@ -1,30 +1,30 @@
 import React, { useState } from "react";
 import Modal from "react-modal";
-import { createQueue } from "../../util/db";
-import styles from "./Queue.module.css";
 import { modalStyle } from "../../util/constants";
+import { createCourse } from "../../util/db";
+import styles from "./Admin.module.css";
 
-interface QueueModalProps {
+interface CourseModalProps {
     isOpen: boolean;
     closeModal: () => void;
 }
-function QueueModal(props: QueueModalProps) {
+function CourseModal(props: CourseModalProps) {
     const [course, setCourse] = useState("");
-    const [location, setLocation] = useState("");
+    const [code, setCode] = useState("");
 
     return (
         <Modal
             isOpen={props.isOpen}
             onRequestClose={props.closeModal}
             style={modalStyle}
-            contentLabel="Create a new Queue"
+            contentLabel="Create a new Course"
         >
-            <h2>Create a New Queue</h2>
+            <h2>Create a New Course</h2>
             <form
                 onSubmit={(e) => {
-                    createQueue(course, location);
+                    createCourse(course, code);
                     setCourse("");
-                    setLocation("");
+                    setCode("");
                     props.closeModal();
                     e.preventDefault();
                 }}
@@ -36,10 +36,10 @@ function QueueModal(props: QueueModalProps) {
                         onChange={(x) => setCourse(x.target.value)}
                         autoFocus={true}
                     />
-                    <label>Location: </label>
+                    <label>Code: </label>
                     <input
-                        value={location}
-                        onChange={(x) => setLocation(x.target.value)}
+                        value={code}
+                        onChange={(x) => setCode(x.target.value)}
                     />
                 </div>
                 <button type="submit">create</button>
@@ -48,22 +48,18 @@ function QueueModal(props: QueueModalProps) {
     );
 }
 
-export function NewQueue() {
+export function NewCourse() {
     const [modalIsOpen, setIsOpen] = React.useState(false);
 
     return (
         <>
-            <QueueModal
+            <CourseModal
                 isOpen={modalIsOpen}
                 closeModal={() => setIsOpen(false)}
             />
-            <div
-                className={`${styles.queueHolder} ${styles.newQueueHolder}`}
-                onClick={() => setIsOpen(true)}
-            >
-                <h2>New Queue</h2>
-                <p>Create a new queue</p>
-            </div>
+            <button onClick={() => setIsOpen(true)}>
+                New course
+            </button>
         </>
     );
 }

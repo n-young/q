@@ -1,4 +1,5 @@
 import React from "react";
+import AdminInfo from "../components/admin/AdminInfo";
 import Main from "../components/common/Main";
 import { useAdminGuard } from "../util/hooks";
 
@@ -7,7 +8,7 @@ export default function Admin() {
 
     return isAdmin && (
         <Main>
-            <h2>Admin</h2>
+            <AdminInfo />
         </Main>
     );
 }

@@ -21,14 +21,14 @@ export default function QueueList() {
         <div className={styles.queues}>
             {!loading &&
                 messages &&
-                messages.map((x, i) => {
+                messages.map(x => {
                     const q = {
                         id: x.id,
                         course: x.course,
                         location: x.location,
                         tickets: x.tickets,
                     };
-                    return <QueueIcon key={i} queue={q} />;
+                    return <QueueIcon key={x.id} queue={q} />;
                 })}
             {isAdmin && <NewQueue />}
         </div>
