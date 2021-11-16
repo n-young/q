@@ -15,6 +15,7 @@ const TA = ({ cid, uid, isHTA }: TAProps) => {
     const [user, loading, error] = useDocumentData(
         doc(firestore, "users", uid || "dummy")
     );
+
     const TAInfo = () =>
         !loading && user ? (
             <div className={styles.ta}>
@@ -39,12 +40,12 @@ const TA = ({ cid, uid, isHTA }: TAProps) => {
         </a>
     );
 
-    return (
+    return !loading ? (
         <div className={styles.horizontal}>
             <TAInfo />
             <TADelete />
         </div>
-    );
+    ) : <></>
 };
 
 interface CourseInfoProps {
@@ -84,7 +85,7 @@ export default function CourseInfo({ isAdmin, cid }: CourseInfoProps) {
 
     return (
         <>
-            { isAdmin && <HTAs /> }
+            {isAdmin && <HTAs />}
             <TAs />
         </>
     );

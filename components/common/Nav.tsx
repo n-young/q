@@ -1,11 +1,11 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { toast } from "react-toastify";
 import styles from "./Common.module.css";
 import { auth } from "../../util/firebase";
-import { setUser } from "../../util/db";
+import { setUser, isHta } from "../../util/db";
 
 function SignIn() {
     const signInWithGoogle = () => {
@@ -54,7 +54,12 @@ function SignOut({ router }: any) {
 
 export default function Nav() {
     const [user] = useAuthState(auth);
+    const [isAnHta, setIsAnHta] = useState(false);
     const router = useRouter();
+
+    useEffect(() => {
+        if (user) isHta(user.uid).then((x) => setIsAnHta(true));
+    }, []);
 
     return (
         <>
@@ -69,9 +74,11 @@ export default function Nav() {
                     <div className={styles.horizontal}>
                         {user ? (
                             <>
-                                <p onClick={() => router.push("/settings")}>
-                                    Settings
-                                </p>
+                                {isAnHta && (
+                                    <p onClick={() => router.push("/settings")}>
+                                        Settings
+                                    </p>
+                                )}
                                 <SignOut router={router} />
                             </>
                         ) : (
