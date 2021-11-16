@@ -59,18 +59,6 @@ export default function CourseInfo({ isAdmin, cid }: CourseInfoProps) {
 
     if (loading || !course) return <></>;
 
-    const TAs = () => (
-        <div>
-            <div className={styles.courseInfo}>
-                <h2>TAs:</h2>
-                <NewTA cid={course.id} isHTA={false} />
-            </div>
-            {course.tas.map((uid: string) => (
-                <TA key={uid} cid={course.id} uid={uid} isHTA={false} />
-            ))}
-        </div>
-    );
-
     const HTAs = () => (
         <div>
             <div className={styles.courseInfo}>
@@ -79,6 +67,18 @@ export default function CourseInfo({ isAdmin, cid }: CourseInfoProps) {
             </div>
             {course.htas.map((uid: string) => (
                 <TA key={uid} cid={course.id} uid={uid} isHTA={true} />
+            ))}
+        </div>
+    );
+
+    const TAs = () => (
+        <div>
+            <div className={styles.courseInfo}>
+                <h2>TAs:</h2>
+                <NewTA cid={course.id} isHTA={false} />
+            </div>
+            {course.tas.map((uid: string) => (
+                <TA key={uid} cid={course.id} uid={uid} isHTA={false} />
             ))}
         </div>
     );

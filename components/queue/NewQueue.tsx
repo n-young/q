@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import moment from "moment-timezone"
+import moment from "moment-timezone";
 import Modal from "react-modal";
-import { createQueue } from "../../util/db";
 import styles from "./Queue.module.css";
-import { modalStyle, times } from "../../util/constants";
+import { createQueue } from "../../util/db";
 import { useTaCourses } from "../../util/hooks";
+import { dtformat, modalStyle, times, timezone } from "../../util/constants";
 
 interface QueueModalProps {
     isOpen: boolean;
@@ -17,6 +17,15 @@ function QueueModal({ isOpen, closeModal }: QueueModalProps) {
     const [location, setLocation] = useState("");
     const [zoomLink, setZoomLink] = useState("");
     const [endTime, setEndTime] = useState(0);
+
+    const reset = () => {
+        setCourse("");
+        setTitle("");
+        setLocation("");
+        setZoomLink("");
+        setEndTime(-1);
+        closeModal();
+    };
 
     return (
         <Modal
@@ -35,12 +44,7 @@ function QueueModal({ isOpen, closeModal }: QueueModalProps) {
                         zoomLink,
                         times[endTime].toDate()
                     );
-                    setCourse("");
-                    setTitle("");
-                    setLocation("");
-                    setZoomLink("");
-                    setEndTime(-1);
-                    closeModal();
+                    reset();
                     e.preventDefault();
                 }}
             >
@@ -87,7 +91,7 @@ function QueueModal({ isOpen, closeModal }: QueueModalProps) {
                         <option value={-1} disabled selected></option>
                         {times.map((y, i) => (
                             <option value={i} key={i}>
-                                {moment.tz(y, "America/Toronto").format("h:mm A")}
+                                {moment.tz(y, timezone).format(dtformat)}
                             </option>
                         ))}
                     </select>
@@ -97,7 +101,7 @@ function QueueModal({ isOpen, closeModal }: QueueModalProps) {
         </Modal>
     );
 
-    return <></>
+    return <></>;
 }
 
 export default function NewQueue() {
@@ -115,7 +119,6 @@ export default function NewQueue() {
             >
                 <h2>New Queue</h2>
                 <p>Create a new queue.</p>
-                <p></p>
             </div>
         </>
     );

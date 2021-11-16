@@ -18,10 +18,6 @@ export default function QueueList() {
         )
     );
 
-    if (error) {
-        return <p>An error occured.</p>;
-    }
-
     return (
         <div className={styles.queues}>
             {!loading &&

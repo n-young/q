@@ -20,7 +20,6 @@ export default function Q() {
         doc(firestore, "queues", qid)
     );
     const [isTa, taLoading] = useTAFor(queue);
-    const [isSignedUp, setIsSignedUp] = useState(false)
 
     if (qid && !loading && !taLoading && typeof qid == "string") {
         return (

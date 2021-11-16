@@ -66,10 +66,13 @@ export default function EditTicket({ tid }: EditTicketProps) {
                 isOpen={modalIsOpen}
                 closeModal={() => setIsOpen(false)}
             />
-            <button onClick={() => {
-                console.log("Open")
-                setIsOpen(true)
-            }}>Edit</button>
+            <button
+                onClick={() => {
+                    setIsOpen(true);
+                }}
+            >
+                Edit
+            </button>
         </>
     );
 }

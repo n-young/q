@@ -15,14 +15,18 @@ export const modalStyle = {
 };
 
 export const nextNHours = (n: number) => {
-    const endTime = moment.utc().add(n, "h")
+    const endTime = moment.utc().add(n, "h");
     const timeStops = [];
-    const startTime = moment.utc().add(15 - moment.utc().minute() % 15, "m")
+    const startTime = moment
+        .utc()
+        .add(15 - (moment.utc().minute() % 15), "m")
         .add(-1, "h");
-    while(startTime <= endTime){
+    while (startTime <= endTime) {
         timeStops.push(new moment.utc(startTime));
         startTime.add(15, "m");
     }
     return timeStops;
-}
-export const times = nextNHours(12)
+};
+export const times = nextNHours(12);
+export const timezone = "America/Toronto";
+export const dtformat = "h:mm A";

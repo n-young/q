@@ -4,9 +4,7 @@ import Modal from "react-modal";
 import { doc } from "firebase/firestore";
 import { useDocumentData } from "react-firebase-hooks/firestore";
 import { firestore } from "../../util/firebase";
-import { useAuthState } from "react-firebase-hooks/auth";
-import { auth } from "../../util/firebase";
-import { modalStyle, nextNHours } from "../../util/constants";
+import { dtformat, modalStyle, nextNHours } from "../../util/constants";
 import { setQueue } from "../../util/db";
 import styles from "./Ticket.module.css";
 
@@ -16,11 +14,10 @@ interface EditQueueModalProps {
     qid: string;
 }
 function EditQueueModal({ isOpen, closeModal, qid }: EditQueueModalProps) {
-    const [user] = useAuthState(auth);
+    const times = nextNHours(12);
     const [queue, loading, error] = useDocumentData(
         doc(firestore, "queues", qid || "dummy")
     );
-    const times = nextNHours(12);
 
     const setNewQueue = (newQueue: any) => {
         const toset = {
@@ -73,7 +70,7 @@ function EditQueueModal({ isOpen, closeModal, qid }: EditQueueModalProps) {
                     <option value={-1} disabled selected></option>
                     {times.map((y, i) => (
                         <option value={i} key={i}>
-                            {y.format("h:mm A")}
+                            {y.format(dtformat)}
                         </option>
                     ))}
                 </select>

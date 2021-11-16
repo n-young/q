@@ -5,7 +5,7 @@ import { useHtaCourses } from "../../util/hooks";
 
 export default function HTAPanel() {
     const [cid, setCid] = useState("");
-    const courses = useHtaCourses()
+    const courses = useHtaCourses();
 
     const DropDown = () => (
         <select value={cid} onChange={(e) => setCid(e.target.value)}>

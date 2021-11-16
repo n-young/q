@@ -6,6 +6,7 @@ import { firestore } from "../../util/firebase";
 import { useRouter } from "next/router";
 import { QueueType } from "../../util/types";
 import styles from "./Queue.module.css";
+import { timezone, dtformat } from "../../util/constants";
 
 interface QueueProps {
     queue: QueueType;
@@ -34,9 +35,10 @@ export default function QueueIcon({
                     {ended ? "Ended" : "Ends"} at:{" "}
                     <strong>
                         {moment
-                            .tz(moment.utc(queue.endTime), "America/Toronto")
-                            .format("h:mm A")}
-                    </strong>.
+                            .tz(moment.utc(queue.endTime), timezone)
+                            .format(dtformat)}
+                    </strong>
+                    .
                 </p>
                 <p>
                     Currently <strong>{queue.tickets.length}</strong> student

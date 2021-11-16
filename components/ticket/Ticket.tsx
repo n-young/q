@@ -9,6 +9,7 @@ import { doc } from "firebase/firestore";
 import { TicketStatus } from "../../util/types";
 import styles from "./Ticket.module.css";
 import EditTicket from "./EditTicket";
+import { timezone, dtformat } from "../../util/constants";
 
 interface ClaimButtonProps {
     status: TicketStatus;
@@ -107,9 +108,9 @@ export default function Ticket({ qid, tid, user, isTa }: TicketProps) {
                         {moment
                             .tz(
                                 moment.utc(ticket.timestamp.toDate()),
-                                "America/Toronto"
+                                timezone
                             )
-                            .format("h:mm A")}
+                            .format(dtformat)}
                     </p>
                 </div>
                 <div>
