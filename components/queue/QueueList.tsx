@@ -14,7 +14,7 @@ export default function QueueList() {
     const [queues, loading, error] = useCollectionData(
         query(
             collection(firestore, "queues"),
-            where("endTime", ">", Timestamp.fromDate(times[2].toDate()))
+            where("endTime", ">", Timestamp.fromDate(times[0].toDate()))
         )
     );
 
