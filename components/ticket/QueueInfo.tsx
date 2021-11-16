@@ -39,7 +39,7 @@ export default function QueueInfo({ queue, user, isTa }: QueueInfoProps) {
                 <p>
                     Ends at:{" "}
                     <strong>
-                        {moment(queue.endTime.toDate()).format("h:mm A")}
+                        {moment.utc(queue.endTime.toDate()).local().format("h:mm A")}
                     </strong>
                 </p>
                 <p>

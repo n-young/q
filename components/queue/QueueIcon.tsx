@@ -26,7 +26,7 @@ export default function QueueIcon({
         >
             <h2 className={styles.courseTitle}>{course.code} : {queue.title}</h2>
             <div className={styles.queueInfo}>
-                <p>{ended ? "Ended" : "Ends"} at: <strong>{moment(queue.endTime).format("h:mm A")}</strong></p>
+                <p>{ended ? "Ended" : "Ends"} at: <strong>{moment.utc(queue.endTime).local().format("h:mm A")}</strong></p>
                 <p>Currently <strong>{queue.tickets.length}</strong> students in line</p>
             </div>
         </div>

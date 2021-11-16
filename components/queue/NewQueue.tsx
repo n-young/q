@@ -86,7 +86,7 @@ function QueueModal({ isOpen, closeModal }: QueueModalProps) {
                         <option value={-1} disabled selected></option>
                         {times.map((y, i) => (
                             <option value={i} key={i}>
-                                {y.format("h:mm A")}
+                                {y.local().format("h:mm A")}
                             </option>
                         ))}
                     </select>

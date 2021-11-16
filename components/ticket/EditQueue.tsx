@@ -80,7 +80,7 @@ function EditQueueModal({ isOpen, closeModal, qid }: EditQueueModalProps) {
                 <button
                     onClick={(_) =>
                         setNewQueue({
-                            endTime: moment(),
+                            endTime: moment.utc(),
                         })
                     }
                 >

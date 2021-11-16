@@ -105,7 +105,7 @@ export default function Ticket({ qid, tid, user, isTa }: TicketProps) {
                     </p>
                     <p>
                         <strong>Submitted</strong>:{" "}
-                        {moment(ticket.timestamp.toDate()).format("h:mm A")}
+                        {moment.utc(ticket.timestamp.toDate()).local().format("h:mm A")}
                     </p>
                 </div>
                 <div>
