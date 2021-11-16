@@ -32,6 +32,7 @@ export enum TicketStatus {
 export interface TicketType {
     id: string
     student: string
+    studentId: string
     message: string
     status: TicketStatus
 }

@@ -25,7 +25,7 @@ function TicketModal({ isOpen, closeModal, qid }: TicketModalProps) {
             <form
                 onSubmit={(e) => {
                     if (user && user.displayName && qid) {
-                        createTicket(user.displayName, message, qid);
+                        createTicket(user.displayName, user.uid, message, qid);
                     }
                     setMessage("");
                     closeModal();

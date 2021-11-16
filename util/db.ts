@@ -237,23 +237,26 @@ export function removeQueue(id: string) {
 
 export function createTicket(
     student: string,
+    studentId: string,
     message: string,
     queue_id: string
 ) {
     const id = uuidv4();
-    setTicket(id, student, message, T.TicketStatus.Unclaimed);
+    setTicket(id, student, studentId, message, T.TicketStatus.Unclaimed);
     addTicketToQueue(queue_id, id);
 }
 
 export function setTicket(
     id: string,
     student: string,
+    studentId: string,
     message: string,
     status: T.TicketStatus
 ) {
     return setDoc(doc(firestore, TICKETS, id), {
         id: id,
         student: student,
+        studentId: studentId,
         message: message,
         status: status,
     });

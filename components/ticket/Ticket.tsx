@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useReducer, useState } from "react";
 import { setTicketStatus, removeTicketFromQueue } from "../../util/db";
 import { firestore } from "../../util/firebase";
 import { useDocumentData } from "react-firebase-hooks/firestore";
@@ -65,10 +65,11 @@ interface TicketProps {
     user: any;
     isTa: boolean;
 }
-export default function Ticket({ qid, tid, isTa }: TicketProps) {
+export default function Ticket({ qid, tid, user, isTa }: TicketProps) {
     const [ticket, loading, error] = useDocumentData(
         doc(firestore, "tickets", tid)
     );
+    const mine = ticket?.studentId === user.uid
 
     return ticket ? (
         <div className={styles.ticket}>

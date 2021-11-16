@@ -17,7 +17,7 @@ export default function QueueList() {
             where(
                 "endTime",
                 ">",
-                Timestamp.fromDate(times[0].toDate())
+                Timestamp.fromDate(times[4].toDate())
             )
         )
     );
