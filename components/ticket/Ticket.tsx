@@ -5,6 +5,7 @@ import { useDocumentData } from "react-firebase-hooks/firestore";
 import { doc } from "firebase/firestore";
 import { TicketStatus } from "../../util/types";
 import styles from "./Ticket.module.css";
+import EditTicket from "./EditTicket";
 
 interface ClaimButtonProps {
     status: TicketStatus;
@@ -65,12 +66,7 @@ interface TicketProps {
     user: any;
     isTa: boolean;
 }
-export default function Ticket({
-    qid,
-    tid,
-    user,
-    isTa,
-}: TicketProps) {
+export default function Ticket({ qid, tid, user, isTa }: TicketProps) {
     const [ticket, loading, error] = useDocumentData(
         doc(firestore, "tickets", tid)
     );
@@ -84,8 +80,9 @@ export default function Ticket({
             </div>
             <div>
                 {isTa && <ClaimButton status={ticket.status} tid={tid} />}
-                {isTa && <DeleteButton qid={qid} tid={tid} />}
+                {(mine || isTa) && <DeleteButton qid={qid} tid={tid} />}
                 {!isTa && <StatusButton status={ticket.status} />}
+                {mine && <EditTicket tid={tid} />}
             </div>
         </div>
     ) : (
