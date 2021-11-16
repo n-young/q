@@ -1,4 +1,5 @@
 import React from "react";
+import moment from "moment";
 import Modal from "react-modal";
 import { doc } from "firebase/firestore";
 import { useDocumentData } from "react-firebase-hooks/firestore";
@@ -44,13 +45,18 @@ function EditQueueModal({ isOpen, closeModal, qid }: EditQueueModalProps) {
             contentLabel="Edit Queue"
         >
             <h2>Edit Queue</h2>
-            <form className={styles.form}>
+            <form className={styles.form} onSubmit={(e) => e.preventDefault()}>
                 <label>Title:</label>
                 <input
                     value={queue.title}
                     onChange={(e) => setNewQueue({ title: e.target.value })}
                 />
                 <label>Location:</label>
+                <input
+                    value={queue.location}
+                    onChange={(e) => setNewQueue({ location: e.target.value })}
+                />
+                <label>Zoom Link:</label>
                 <input
                     value={queue.zoomLink}
                     onChange={(e) => setNewQueue({ zoomLink: e.target.value })}
@@ -71,6 +77,15 @@ function EditQueueModal({ isOpen, closeModal, qid }: EditQueueModalProps) {
                         </option>
                     ))}
                 </select>
+                <button
+                    onClick={(_) =>
+                        setNewQueue({
+                            endTime: moment(),
+                        })
+                    }
+                >
+                    Close Queue
+                </button>
             </form>
         </Modal>
     ) : (

@@ -36,10 +36,21 @@ export default function QueueInfo({ queue, user, isTa }: QueueInfoProps) {
                     </strong>
                 </p>
                 <p>
-                    Currently <strong>{queue.tickets.length}</strong> students
+                    Currently <strong>{queue.tickets.length}</strong> student
+                    {queue.tickets.length === 1 ? " " : "s "}
                     in line
                 </p>
             </div>
+            {queue.zoomLink && (
+                <div className={styles.info}>
+                    <p>
+                        Zoom link:{" "}
+                        <strong>
+                            <a href={queue.zoomLink}>{queue.zoomLink}</a>
+                        </strong>
+                    </p>
+                </div>
+            )}
         </>
     ) : (
         <></>
