@@ -24,6 +24,11 @@
     background-color: var(--color-white);
 }
 
+.queueExpired {
+    background-color: var(--color-off-white);
+    border: 1px black dashed;
+}
+
 .queueInfo {
     display: flex;
     flex-direction: column;

@@ -17,15 +17,17 @@ export default function QueueIcon({
     const [course, loading, error] = useDocumentData(
         doc(firestore, "courses", queue.course || "dummy")
     );
+    const ended = queue.endTime < new Date()
+    const expired = queue.endTime < moment().add(-30, "m").toDate()
 
-    return !loading && course ? (
+    return !expired && !loading && course ? (
         <div
-            className={styles.queueHolder}
+            className={`${styles.queueHolder} ${ended ? styles.queueExpired : ""}`}
             onClick={() => router.push(`/q/${queue.id}`)}
         >
             <h2 className={styles.courseTitle}>{course.code} : {queue.title}</h2>
             <div className={styles.queueInfo}>
-                <p>Ends at: <strong>{moment(queue.endTime).format("h:mm A")}</strong></p>
+                <p>{ended ? "Ended" : "Ends"} at: <strong>{moment(queue.endTime).format("h:mm A")}</strong></p>
                 <p>Currently <strong>{queue.tickets.length}</strong> students in line</p>
             </div>
         </div>
