@@ -1,0 +1,24 @@
+.form {
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    margin: 20px 0;
+    align-items: center;
+}
+
+.settingsBar {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.horizontal {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.delete {
+    cursor: pointer;
+}

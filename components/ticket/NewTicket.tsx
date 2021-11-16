@@ -10,25 +10,25 @@ interface TicketModalProps {
     closeModal: () => void;
     qid: string;
 }
-function TicketModal(props: TicketModalProps) {
+function TicketModal({ isOpen, closeModal, qid }: TicketModalProps) {
     const [user] = useAuthState(auth);
     const [message, setMessage] = useState("");
 
     return (
         <Modal
-            isOpen={props.isOpen}
-            onRequestClose={props.closeModal}
+            isOpen={isOpen}
+            onRequestClose={closeModal}
             style={modalStyle}
             contentLabel="Join the Queue"
         >
             <h2>Join the Queue</h2>
             <form
                 onSubmit={(e) => {
-                    if (user && user.displayName && props.qid) {
-                        createTicket(user.displayName, message, props.qid);
+                    if (user && user.displayName && qid) {
+                        createTicket(user.displayName, message, qid);
                     }
                     setMessage("");
-                    props.closeModal();
+                    closeModal();
                     e.preventDefault();
                 }}
             >

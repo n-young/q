@@ -6,7 +6,7 @@ import styles from "./Queue.module.css"
 interface QueueProps {
     queue: QueueType;
 }
-export function QueueIcon(props: QueueProps): ReactElement<QueueProps> {
+export default function QueueIcon(props: QueueProps): ReactElement<QueueProps> {
     const router = useRouter()
 
     return (

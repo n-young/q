@@ -3,10 +3,10 @@ import { collection } from "firebase/firestore";
 import { useCollectionData } from "react-firebase-hooks/firestore";
 import { firestore } from "../../util/firebase";
 import { NewCourse } from "./NewCourse";
-import styles from "./Admin.module.css";
+import styles from "./Settings.module.css";
 import CourseInfo from "./CourseInfo";
 
-export default function AdminInfo() {
+export default function SettingsInfo() {
     const [cid, setCid] = useState("")
     const [courses, loading, error] = useCollectionData(
         collection(firestore, "courses")
@@ -24,12 +24,12 @@ export default function AdminInfo() {
     return (
         <div className={styles.info}>
             <h2>Admin Panel</h2>
-            <div className={styles.adminBar}>
+            <div className={styles.settingsBar}>
                 <NewCourse />
                 <DropDown />
             </div>
             <hr/>
-            <CourseInfo cid={cid} />
+            <CourseInfo isAdmin={true} cid={cid} />
         </div>
     );
 }

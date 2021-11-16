@@ -8,14 +8,14 @@ interface QueueModalProps {
     isOpen: boolean;
     closeModal: () => void;
 }
-function QueueModal(props: QueueModalProps) {
+function QueueModal({ isOpen, closeModal }: QueueModalProps) {
     const [course, setCourse] = useState("");
     const [location, setLocation] = useState("");
 
     return (
         <Modal
-            isOpen={props.isOpen}
-            onRequestClose={props.closeModal}
+            isOpen={isOpen}
+            onRequestClose={closeModal}
             style={modalStyle}
             contentLabel="Create a new Queue"
         >
@@ -25,7 +25,7 @@ function QueueModal(props: QueueModalProps) {
                     createQueue(course, location);
                     setCourse("");
                     setLocation("");
-                    props.closeModal();
+                    closeModal();
                     e.preventDefault();
                 }}
             >
@@ -48,7 +48,7 @@ function QueueModal(props: QueueModalProps) {
     );
 }
 
-export function NewQueue() {
+export default function NewQueue() {
     const [modalIsOpen, setIsOpen] = React.useState(false);
 
     return (

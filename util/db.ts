@@ -37,6 +37,13 @@ export function getUser(uid: string) {
     return getDoc(doc(firestore, USERS, uid));
 }
 
+export function getUserByEmail(email: string) {
+    return getDocs(query(
+        collection(firestore, USERS),
+        where("email", "==", email),
+    ));
+}
+
 export function getAdminByID(uid: string) {
     return getDocs(
         query(collection(firestore, ADMINS), where("id", "==", uid))
@@ -55,6 +62,20 @@ export function isHtaFor(uid: string, cid: string) {
     return getDocs(query(
         collection(firestore, COURSES),
         where("id", "==", cid),
+        where("htas", "array-contains", uid)
+    ));
+}
+
+export function isTa(uid: string) {
+    return getDocs(query(
+        collection(firestore, COURSES),
+        where("tas", "array-contains", uid)
+    ));
+}
+
+export function isHta(uid: string) {
+    return getDocs(query(
+        collection(firestore, COURSES),
         where("htas", "array-contains", uid)
     ));
 }
@@ -87,28 +108,56 @@ export function getCourse(id: string) {
     return getDoc(doc(firestore, COURSES, id));
 }
 
-export function addTA(course_id: string, ta: string) {
-    return updateDoc(doc(firestore, COURSES, course_id), {
-        tas: arrayUnion(ta),
-    });
+export function addTA(course_id: string, ta: string, toast: any) {
+    getUserByEmail(ta).then(x => {
+        if (x.size != 1) {
+            toast("Email not found. The TA should log in at least once first.", {
+                position: "top-center",
+                type: "error",
+            });
+            return
+        }
+        const data = x.docs[0]
+        updateDoc(doc(firestore, COURSES, course_id), {
+            tas: arrayUnion(data?.id),
+        });
+    })
 }
 
 export function removeTA(course_id: string, ta: string) {
-    return updateDoc(doc(firestore, COURSES, course_id), {
-        tas: arrayRemove(ta),
-    });
+    getUserByEmail(ta).then(x => {
+        if (x.size != 1) return
+        const data = x.docs[0]
+        updateDoc(doc(firestore, COURSES, course_id), {
+            tas: arrayRemove(data?.id),
+        });
+    })
 }
 
-export function addHTA(course_id: string, hta: string) {
-    return updateDoc(doc(firestore, COURSES, course_id), {
-        htas: arrayUnion(hta),
-    });
+export function addHTA(course_id: string, hta: string, toast: any) {
+    getUserByEmail(hta).then(x => {
+        if (x.size != 1) {
+            toast("Email not found. The TA should log in at least once first.", {
+                position: "top-center",
+                type: "error",
+            });
+            return
+        }
+        const data = x.docs[0]
+        updateDoc(doc(firestore, COURSES, course_id), {
+            htas: arrayUnion(data?.id),
+        });
+    })
 }
 
 export function removeHTA(course_id: string, hta: string) {
-    return updateDoc(doc(firestore, COURSES, course_id), {
-        htas: arrayRemove(hta),
-    });
+    getUserByEmail(hta).then(x => {
+        if (x.size != 1) return
+        const data = x.docs[0]
+        updateDoc(doc(firestore, COURSES, course_id), {
+            htas: arrayRemove(data?.id),
+        });
+    })
 }
 
 export function removeCourse(id: string) {

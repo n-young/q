@@ -9,7 +9,7 @@ interface QueueInfoProps {
 }
 export default function QueueInfo({ queue, user, isTa }: QueueInfoProps) {
     return queue && queue.tickets ? (
-        <div>
+        <div className={styles.info}>
             <h2>Course: {queue.course}</h2>
             {user && !isTa && <NewTicket qid={queue.id} />}
         </div>

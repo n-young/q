@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { collection } from "firebase/firestore";
 import { useCollectionData } from "react-firebase-hooks/firestore";
 import { firestore } from "../../util/firebase";
-import { QueueIcon } from "./QueueIcon";
-import { NewQueue } from "./NewQueue";
+import QueueIcon from "./QueueIcon";
+import NewQueue from "./NewQueue";
 import styles from "./Queue.module.css";
 import { useAdmin } from "../../util/hooks";
 

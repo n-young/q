@@ -1,5 +1,5 @@
 import React from "react";
-import AdminInfo from "../components/admin/AdminInfo";
+import AdminInfo from "../components/settings/AdminInfo";
 import Main from "../components/common/Main";
 import { useAdminGuard } from "../util/hooks";
 

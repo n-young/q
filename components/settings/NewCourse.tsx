@@ -2,20 +2,20 @@ import React, { useState } from "react";
 import Modal from "react-modal";
 import { modalStyle } from "../../util/constants";
 import { createCourse } from "../../util/db";
-import styles from "./Admin.module.css";
+import styles from "./Settings.module.css";
 
 interface CourseModalProps {
     isOpen: boolean;
     closeModal: () => void;
 }
-function CourseModal(props: CourseModalProps) {
+function CourseModal({ isOpen, closeModal }: CourseModalProps) {
     const [course, setCourse] = useState("");
     const [code, setCode] = useState("");
 
     return (
         <Modal
-            isOpen={props.isOpen}
-            onRequestClose={props.closeModal}
+            isOpen={isOpen}
+            onRequestClose={closeModal}
             style={modalStyle}
             contentLabel="Create a new Course"
         >
@@ -25,7 +25,7 @@ function CourseModal(props: CourseModalProps) {
                     createCourse(course, code);
                     setCourse("");
                     setCode("");
-                    props.closeModal();
+                    closeModal();
                     e.preventDefault();
                 }}
             >
