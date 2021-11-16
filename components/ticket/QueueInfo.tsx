@@ -6,6 +6,7 @@ import { firestore } from "../../util/firebase";
 import NewTicket from "./NewTicket";
 import EditQueue from "./EditQueue";
 import styles from "./Ticket.module.css";
+import { useQueueTickets } from "../../util/hooks";
 
 interface QueueInfoProps {
     queue: any;
@@ -16,6 +17,8 @@ export default function QueueInfo({ queue, user, isTa }: QueueInfoProps) {
     const [course, loading, error] = useDocumentData(
         doc(firestore, "courses", queue.course || "dummy")
     );
+    const tickets = useQueueTickets(queue);
+    const isSignedUp = tickets.some((x: any) => x.studentId === user.uid)
 
     return !loading && course && queue && queue.tickets ? (
         <>
@@ -24,7 +27,7 @@ export default function QueueInfo({ queue, user, isTa }: QueueInfoProps) {
                     {course.code} : {queue.title}
                 </h2>
                 <div>
-                    {user && <NewTicket qid={queue.id} />}
+                    {user && !isSignedUp && <NewTicket qid={queue.id} />}
                     {isTa && <EditQueue qid={queue.id} />}
                 </div>
             </div>

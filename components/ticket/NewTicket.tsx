@@ -10,7 +10,11 @@ interface TicketModalProps {
     closeModal: () => void;
     qid: string;
 }
-function TicketModal({ isOpen, closeModal, qid }: TicketModalProps) {
+function TicketModal({
+    isOpen,
+    closeModal,
+    qid,
+}: TicketModalProps) {
     const [user] = useAuthState(auth);
     const [message, setMessage] = useState("");
 

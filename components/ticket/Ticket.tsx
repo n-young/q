@@ -65,11 +65,16 @@ interface TicketProps {
     user: any;
     isTa: boolean;
 }
-export default function Ticket({ qid, tid, user, isTa }: TicketProps) {
+export default function Ticket({
+    qid,
+    tid,
+    user,
+    isTa,
+}: TicketProps) {
     const [ticket, loading, error] = useDocumentData(
         doc(firestore, "tickets", tid)
     );
-    const mine = ticket?.studentId === user.uid
+    const mine = ticket?.studentId === user.uid;
 
     return ticket ? (
         <div className={styles.ticket}>

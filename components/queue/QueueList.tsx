@@ -14,11 +14,7 @@ export default function QueueList() {
     const [queues, loading, error] = useCollectionData(
         query(
             collection(firestore, "queues"),
-            where(
-                "endTime",
-                ">",
-                Timestamp.fromDate(times[4].toDate())
-            )
+            where("endTime", ">", Timestamp.fromDate(times[2].toDate()))
         )
     );
 
@@ -32,18 +28,20 @@ export default function QueueList() {
                 !adminLoading &&
                 !TALoading &&
                 queues &&
-                queues.map((x) => {
-                    const q = {
-                        id: x.id,
-                        course: x.course,
-                        title: x.title,
-                        location: x.location,
-                        zoomLink: x.zoomLink,
-                        endTime: x.endTime.toDate(),
-                        tickets: x.tickets,
-                    };
-                    return <QueueIcon key={x.id} queue={q} />;
-                })}
+                queues
+                    .sort((x) => x.code)
+                    .map((x) => {
+                        const q = {
+                            id: x.id,
+                            course: x.course,
+                            title: x.title,
+                            location: x.location,
+                            zoomLink: x.zoomLink,
+                            endTime: x.endTime.toDate(),
+                            tickets: x.tickets,
+                        };
+                        return <QueueIcon key={x.id} queue={q} />;
+                    })}
             {(isAdmin || isTA) && <NewQueue />}
         </div>
     );

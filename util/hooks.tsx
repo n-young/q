@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import { toast } from "react-toastify";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../util/firebase";
-import { getAdminByID, isTa, isTaFor, isHta, isHtaFor } from "./db";
+import { getAdminByID, isTa, isTaFor, isHta, isHtaFor, getTicket } from "./db";
 import { DocumentData } from "firebase/firestore";
 
 export function useAdmin() {
@@ -98,32 +98,35 @@ export function useHTA() {
 export function useHTAGuard() {
     const router = useRouter();
     const [user, loading] = useAuthState(auth);
-    const [done, setDone] = useState(false)
+    const [done, setDone] = useState(false);
 
     useEffect(() => {
         let isAnHta = false;
-        if (user) isHta(user.uid).then((_) => {
-            isAnHta = true
-        }).then(() => {
-            if (!isAnHta) {
-                toast("You must be an admin to access this page.", {
-                    position: "top-center",
-                    type: "error",
+        if (user)
+            isHta(user.uid)
+                .then((_) => {
+                    isAnHta = true;
+                })
+                .then(() => {
+                    if (!isAnHta) {
+                        toast("You must be an admin to access this page.", {
+                            position: "top-center",
+                            type: "error",
+                        });
+                        router.push("/");
+                    } else if (!user) {
+                        toast("You must be logged in to access this page.", {
+                            position: "top-center",
+                            type: "error",
+                        });
+                        router.push("/");
+                    } else if (isAnHta) {
+                        setDone(true);
+                    }
                 });
-                router.push("/");
-            } else if (!user) {
-                toast("You must be logged in to access this page.", {
-                    position: "top-center",
-                    type: "error",
-                });
-                router.push("/");
-            } else if (isAnHta){
-                setDone(true)
-            }
-        })
     }, [router, user]);
 
-    return [done, loading]
+    return [done, loading];
 }
 
 export function useHTAFor(queue: any) {
@@ -174,4 +177,18 @@ export function useTaCourses() {
     }, [user]);
 
     return courses;
+}
+
+export function useQueueTickets(queue: any) {
+    const [tickets, setTickets] = useState<any>([]);
+
+    useEffect(() => {
+        Promise.all(
+            queue.tickets.map((x: string) => {
+                return getTicket(x).then(y => y.data())
+            })
+        ).then((res) => setTickets(res));
+    }, [queue.tickets]);
+
+    return tickets;
 }

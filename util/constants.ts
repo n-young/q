@@ -17,7 +17,8 @@ export const modalStyle = {
 export const nextNHours = (n: number) => {
     const endTime = moment().add(n, "h")
     const timeStops = [];
-    const startTime = moment().add(15 - moment().minute() % 15, "m");
+    const startTime = moment().add(15 - moment().minute() % 15, "m")
+        .add(-1, "h");
     while(startTime <= endTime){
         timeStops.push(new moment(startTime));
         startTime.add(15, "m");

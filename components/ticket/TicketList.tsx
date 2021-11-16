@@ -11,7 +11,13 @@ export default function TicketList({ queue, user, isTa }: TicketListProps) {
     return queue && queue.tickets ? (
         <div className={styles.list}>
             {queue.tickets.map((x: string) => (
-                <Ticket key={x} qid={queue.id} tid={x} user={user} isTa={isTa} />
+                <Ticket
+                    key={x}
+                    qid={queue.id}
+                    tid={x}
+                    user={user}
+                    isTa={isTa}
+                />
             ))}
         </div>
     ) : (
