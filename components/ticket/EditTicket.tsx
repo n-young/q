@@ -24,6 +24,7 @@ function EditTicketModal({ isOpen, closeModal, tid }: EditTicketModalProps) {
         };
         setTicket(
             toset.id,
+            toset.timestamp.toDate(),
             toset.student,
             toset.studentId,
             toset.message,

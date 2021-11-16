@@ -18,7 +18,11 @@ export default function QueueInfo({ queue, user, isTa }: QueueInfoProps) {
         doc(firestore, "courses", queue.course || "dummy")
     );
     const tickets = useQueueTickets(queue);
-    const isSignedUp = tickets.some((x: any) => x.studentId === user.uid)
+    const isSignedUp =
+        tickets &&
+        tickets.some((x: any) => {
+            x?.studentId === user.uid;
+        });
 
     return !loading && course && queue && queue.tickets ? (
         <>

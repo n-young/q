@@ -17,10 +17,6 @@
     border-bottom: none;
     margin: 0;
     padding: 10px 20px;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
     transition: background-color 0.1s linear;
 }
 
@@ -28,8 +24,11 @@
     background-color: var(--color-white);
 }
 
-.ticket > div > button {
-    margin: 0 5px;
+.ticketInfo {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .info {

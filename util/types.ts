@@ -31,6 +31,7 @@ export enum TicketStatus {
 
 export interface TicketType {
     id: string
+    timestamp: Date
     student: string
     studentId: string
     message: string

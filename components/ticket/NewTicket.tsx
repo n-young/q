@@ -29,7 +29,7 @@ function TicketModal({
             <form
                 onSubmit={(e) => {
                     if (user && user.displayName && qid) {
-                        createTicket(user.displayName, user.uid, message, qid);
+                        createTicket(new Date(), user.displayName, user.uid, message, qid);
                     }
                     setMessage("");
                     closeModal();

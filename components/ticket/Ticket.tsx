@@ -1,4 +1,8 @@
-import React, { useReducer, useState } from "react";
+import React, { useEffect, useState } from "react";
+import moment from "moment";
+import useSound from "use-sound";
+import claimedSound from "../../public/claimed.mp3"
+import { toast } from "react-toastify";
 import { setTicketStatus, removeTicketFromQueue } from "../../util/db";
 import { firestore } from "../../util/firebase";
 import { useDocumentData } from "react-firebase-hooks/firestore";
@@ -71,18 +75,45 @@ export default function Ticket({ qid, tid, user, isTa }: TicketProps) {
         doc(firestore, "tickets", tid)
     );
     const mine = ticket?.studentId === user.uid;
+    const [dingding] = useSound(claimedSound)
+
+    const [claimed, setClaimed] = useState(false);
+    useEffect(() => {
+        if (ticket?.status === TicketStatus.Claimed && !claimed) {
+            toast("You've been claimed!", {
+                position: "top-center",
+                type: "success",
+            });
+            dingding()
+            setClaimed(true);
+        }
+
+        if (ticket?.status === TicketStatus.Unclaimed && claimed) {
+            setClaimed(false);
+        }
+    }, [ticket?.status]);
 
     return ticket ? (
         <div className={styles.ticket}>
-            <div>
-                <p>{ticket.student}</p>
-                <p>{ticket.message}</p>
-            </div>
-            <div>
-                {isTa && <ClaimButton status={ticket.status} tid={tid} />}
-                {(mine || isTa) && <DeleteButton qid={qid} tid={tid} />}
-                {!isTa && <StatusButton status={ticket.status} />}
-                {mine && <EditTicket tid={tid} />}
+            <div className={styles.ticketInfo}>
+                <div>
+                    <p>
+                        <strong>Student</strong>: {ticket.student}
+                    </p>
+                    <p>
+                        <strong>Message</strong>: {ticket.message}
+                    </p>
+                    <p>
+                        <strong>Submitted</strong>:{" "}
+                        {moment(ticket.timestamp.toDate()).format("h:mm A")}
+                    </p>
+                </div>
+                <div>
+                    {isTa && <ClaimButton status={ticket.status} tid={tid} />}
+                    {(mine || isTa) && <DeleteButton qid={qid} tid={tid} />}
+                    {!isTa && <StatusButton status={ticket.status} />}
+                    {mine && <EditTicket tid={tid} />}
+                </div>
             </div>
         </div>
     ) : (

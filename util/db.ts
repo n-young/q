@@ -10,7 +10,7 @@ import {
     where,
     arrayUnion,
     arrayRemove,
-    Timestamp
+    Timestamp,
 } from "firebase/firestore";
 import { firestore } from "./firebase";
 import { v4 as uuidv4 } from "uuid";
@@ -236,18 +236,27 @@ export function removeQueue(id: string) {
 // --------------------------------------------------------------------
 
 export function createTicket(
+    timestamp: Date,
     student: string,
     studentId: string,
     message: string,
     queue_id: string
 ) {
     const id = uuidv4();
-    setTicket(id, student, studentId, message, T.TicketStatus.Unclaimed);
+    setTicket(
+        id,
+        timestamp,
+        student,
+        studentId,
+        message,
+        T.TicketStatus.Unclaimed
+    );
     addTicketToQueue(queue_id, id);
 }
 
 export function setTicket(
     id: string,
+    timestamp: Date,
     student: string,
     studentId: string,
     message: string,
@@ -255,6 +264,7 @@ export function setTicket(
 ) {
     return setDoc(doc(firestore, TICKETS, id), {
         id: id,
+        timestamp: Timestamp.fromDate(timestamp),
         student: student,
         studentId: studentId,
         message: message,
