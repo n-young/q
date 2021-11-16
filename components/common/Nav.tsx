@@ -3,9 +3,9 @@ import { useRouter } from "next/router";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { toast } from "react-toastify";
-import styles from "./Components.module.css";
-import { auth } from "../util/firebase";
-import { setUser } from "../util/db";
+import styles from "./Common.module.css";
+import { auth } from "../../util/firebase";
+import { setUser } from "../../util/db";
 
 function SignIn() {
     const signInWithGoogle = () => {

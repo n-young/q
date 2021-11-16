@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { toast } from "react-toastify";
-import Main from "../components/Main";
+import Main from "../components/common/Main";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../util/firebase";
 import { getAdminByID } from "../util/db";

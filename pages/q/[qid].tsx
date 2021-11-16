@@ -4,7 +4,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { doc } from "firebase/firestore";
 import { auth, firestore } from "../../util/firebase";
 import { useDocumentData } from "react-firebase-hooks/firestore";
-import Main from "../../components/Main";
+import Main from "../../components/common/Main";
 import QueueInfo from "../../components/ticket/QueueInfo";
 import TicketList from "../../components/ticket/TicketList";
 import { isTaFor, isHtaFor } from "../../util/db";

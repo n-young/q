@@ -2,7 +2,7 @@ import React from "react";
 import Head from "next/head";
 import Nav from "./Nav";
 import Footer from "./Footer";
-import styles from "./Components.module.css";
+import styles from "./Common.module.css";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
