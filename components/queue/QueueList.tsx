@@ -1,6 +1,6 @@
 import React from "react";
 import moment from "moment";
-import { collection } from "firebase/firestore";
+import { collection, query, where, Timestamp } from "firebase/firestore";
 import { useCollectionData } from "react-firebase-hooks/firestore";
 import { firestore } from "../../util/firebase";
 import QueueIcon from "./QueueIcon";
@@ -11,7 +11,14 @@ import { useAdmin } from "../../util/hooks";
 export default function QueueList() {
     const [isAdmin, adminLoading] = useAdmin();
     const [queues, loading, error] = useCollectionData(
-        collection(firestore, "queues")
+        query(
+            collection(firestore, "queues"),
+            where(
+                "endTime",
+                ">",
+                Timestamp.fromDate(moment().add(-30, "m").toDate())
+            )
+        )
     );
 
     if (error) {

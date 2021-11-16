@@ -18,9 +18,8 @@ export default function QueueIcon({
         doc(firestore, "courses", queue.course || "dummy")
     );
     const ended = queue.endTime < new Date()
-    const expired = queue.endTime < moment().add(-30, "m").toDate()
 
-    return !expired && !loading && course ? (
+    return !loading && course ? (
         <div
             className={`${styles.queueHolder} ${ended ? styles.queueExpired : ""}`}
             onClick={() => router.push(`/q/${queue.id}`)}

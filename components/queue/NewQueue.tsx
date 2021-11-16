@@ -105,6 +105,7 @@ export default function NewQueue() {
             >
                 <h2>New Queue</h2>
                 <p>Create a new queue</p>
+                <p></p>
             </div>
         </>
     );
