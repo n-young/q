@@ -49,3 +49,10 @@
     color: var(--color-black);
     border: 1px var(--color-black) solid;
 }
+
+.form {
+    display: grid;
+    grid-template-columns: 2fr 3fr;
+    margin: 20px 0;
+    align-items: center;
+}
