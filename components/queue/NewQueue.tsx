@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Modal from "react-modal";
 import { createQueue } from "../../util/db";
 import styles from "./Queue.module.css";
-import { modalStyle, nextNHours } from "../../util/constants";
+import { modalStyle, times } from "../../util/constants";
 import { useTaCourses } from "../../util/hooks";
 
 interface QueueModalProps {
@@ -15,8 +15,7 @@ function QueueModal({ isOpen, closeModal }: QueueModalProps) {
     const [title, setTitle] = useState("");
     const [location, setLocation] = useState("");
     const [zoomLink, setZoomLink] = useState("");
-    const [endTime, setEndTime] = useState(-1);
-    const times = nextNHours(12);
+    const [endTime, setEndTime] = useState(0);
 
     return (
         <Modal
@@ -96,6 +95,8 @@ function QueueModal({ isOpen, closeModal }: QueueModalProps) {
             </form>
         </Modal>
     );
+
+    return <></>
 }
 
 export default function NewQueue() {

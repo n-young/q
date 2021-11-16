@@ -25,3 +25,4 @@ export const nextNHours = (n: number) => {
     }
     return timeStops;
 }
+export const times = nextNHours(12)
