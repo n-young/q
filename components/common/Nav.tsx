@@ -19,7 +19,7 @@ function SignIn() {
                     position: "top-center",
                     type: "error",
                 });
-                auth.signOut();
+                // auth.signOut();
             }
             // Ensure that the user exists in the database so we can access user data.
             else {

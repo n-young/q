@@ -73,7 +73,7 @@ export default function Ticket({ qid, tid, user, isTa }: TicketProps) {
     const [ticket, loading, error] = useDocumentData(
         doc(firestore, "tickets", tid)
     );
-    const mine = ticket?.studentId === user.uid;
+    const mine = ticket && user && ticket.studentId === user.uid;
     const [dingding] = useSound("/claimed.mp3");
 
     const [claimed, setClaimed] = useState(false);
@@ -113,10 +113,10 @@ export default function Ticket({ qid, tid, user, isTa }: TicketProps) {
                     </p>
                 </div>
                 <div>
-                    {isTa && <ClaimButton status={ticket.status} tid={tid} />}
-                    {(mine || isTa) && <DeleteButton qid={qid} tid={tid} />}
                     {!isTa && <StatusButton status={ticket.status} />}
+                    {isTa && <ClaimButton status={ticket.status} tid={tid} />}
                     {mine && <EditTicket tid={tid} />}
+                    {(mine || isTa) && <DeleteButton qid={qid} tid={tid} />}
                 </div>
             </div>
         </div>

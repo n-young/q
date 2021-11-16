@@ -101,29 +101,26 @@ export function useHTAGuard() {
     const [done, setDone] = useState(false);
 
     useEffect(() => {
-        let isAnHta = false;
-        if (user)
-            isHta(user.uid)
-                .then((_) => {
-                    isAnHta = true;
-                })
-                .then(() => {
-                    if (!isAnHta) {
-                        toast("You must be an admin to access this page.", {
-                            position: "top-center",
-                            type: "error",
-                        });
-                        router.push("/");
-                    } else if (!user) {
-                        toast("You must be logged in to access this page.", {
-                            position: "top-center",
-                            type: "error",
-                        });
-                        router.push("/");
-                    } else if (isAnHta) {
-                        setDone(true);
-                    }
-                });
+        if (user) {
+            isHta(user.uid).then((res) => {
+                const isAnHta = res.docs.length > 0;
+                if (!isAnHta) {
+                    toast("You must be an HTA to access this page.", {
+                        position: "top-center",
+                        type: "error",
+                    });
+                    router.push("/");
+                } else if (isAnHta) {
+                    setDone(true);
+                }
+            });
+        } else {
+            toast("You must be logged in to access this page.", {
+                position: "top-center",
+                type: "error",
+            });
+            router.push("/");
+        }
     }, [router, user]);
 
     return [done, loading];
@@ -185,7 +182,7 @@ export function useQueueTickets(queue: any) {
     useEffect(() => {
         Promise.all(
             queue.tickets.map((x: string) => {
-                return getTicket(x).then(y => y.data())
+                return getTicket(x).then((y) => y.data());
             })
         ).then((res) => setTickets(res));
     }, [queue.tickets]);
