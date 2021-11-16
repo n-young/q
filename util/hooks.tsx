@@ -50,7 +50,7 @@ export function useAdminGuard() {
             });
             router.push("/");
         }
-    }, [isAdmin, user, loading, router]);
+    }, [loading, router, user]);
 
     return [isAdmin, loading];
 }

@@ -6,10 +6,11 @@ import { firestore } from "../../util/firebase";
 import QueueIcon from "./QueueIcon";
 import NewQueue from "./NewQueue";
 import styles from "./Queue.module.css";
-import { useAdmin } from "../../util/hooks";
+import { useAdmin, useTA } from "../../util/hooks";
 
 export default function QueueList() {
     const [isAdmin, adminLoading] = useAdmin();
+    const [isTA, TALoading] = useTA();
     const [queues, loading, error] = useCollectionData(
         query(
             collection(firestore, "queues"),
@@ -29,6 +30,7 @@ export default function QueueList() {
         <div className={styles.queues}>
             {!loading &&
                 !adminLoading &&
+                !TALoading &&
                 queues &&
                 queues.map((x) => {
                     const q = {
@@ -42,7 +44,7 @@ export default function QueueList() {
                     };
                     return <QueueIcon key={x.id} queue={q} />;
                 })}
-            {isAdmin && <NewQueue />}
+            {(isAdmin || isTA) && <NewQueue />}
         </div>
     );
 }

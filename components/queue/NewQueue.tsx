@@ -16,7 +16,7 @@ function QueueModal({ isOpen, closeModal }: QueueModalProps) {
     const [location, setLocation] = useState("");
     const [zoomLink, setZoomLink] = useState("");
     const [endTime, setEndTime] = useState(-1);
-    const times = nextNHours(12)
+    const times = nextNHours(12);
 
     return (
         <Modal
@@ -28,12 +28,18 @@ function QueueModal({ isOpen, closeModal }: QueueModalProps) {
             <h2>Create a New Queue</h2>
             <form
                 onSubmit={(e) => {
-                    createQueue(course, title, location, zoomLink, times[endTime].toDate());
+                    createQueue(
+                        course,
+                        title,
+                        location,
+                        zoomLink,
+                        times[endTime].toDate()
+                    );
                     setCourse("");
                     setTitle("");
                     setLocation("");
-                    setZoomLink("")
-                    setEndTime(-1)
+                    setZoomLink("");
+                    setEndTime(-1);
                     closeModal();
                     e.preventDefault();
                 }}
@@ -73,7 +79,9 @@ function QueueModal({ isOpen, closeModal }: QueueModalProps) {
                     <label>End Time: </label>
                     <select
                         value={endTime}
-                        onChange={(x) => setEndTime(parseInt(x.target.value, 10))}
+                        onChange={(x) =>
+                            setEndTime(parseInt(x.target.value, 10))
+                        }
                         required
                     >
                         <option value={-1} disabled selected></option>
@@ -91,7 +99,7 @@ function QueueModal({ isOpen, closeModal }: QueueModalProps) {
 }
 
 export default function NewQueue() {
-    const [modalIsOpen, setIsOpen] = React.useState(false);
+    const [modalIsOpen, setIsOpen] = useState(false);
 
     return (
         <>
