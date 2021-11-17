@@ -60,9 +60,10 @@ export function useTA() {
     const [isATa, setIsATa] = useState(false);
 
     useEffect(() => {
-        if (user) isTa(user.uid).then((res) => {
-            if (res.docs.length > 0) setIsATa(true)
-        });
+        if (user)
+            isTa(user.uid).then((res) => {
+                if (res.docs.length > 0) setIsATa(true);
+            });
     }, [user]);
 
     return [isATa, loading];
@@ -91,9 +92,10 @@ export function useHTA() {
     const [isAnHta, setIsAnHta] = useState(false);
 
     useEffect(() => {
-        if (user) isHta(user.uid).then((res) => {
-            if (res.docs.length > 0) setIsAnHta(true)
-        });
+        if (user)
+            isHta(user.uid).then((res) => {
+                if (res.docs.length > 0) setIsAnHta(true);
+            });
     }, [user]);
 
     return [isAnHta, loading];
@@ -107,7 +109,7 @@ export function useHTAGuard() {
     useEffect(() => {
         if (user) {
             isHta(user.uid).then((res) => {
-                const isAnHta = res.docs.length > 0
+                const isAnHta = res.docs.length > 0;
                 if (!isAnHta) {
                     toast("You must be an HTA to access this page.", {
                         position: "top-center",
@@ -170,7 +172,11 @@ export function useTaCourses() {
             isTa(user.uid).then((x) => {
                 cs = cs.concat(x.docs.map((x) => x.data()));
                 isHta(user.uid).then((x) => {
-                    cs = cs.concat(x.docs.map((x) => x.data()));
+                    cs = cs.concat(
+                        x.docs
+                            .map((x) => x.data())
+                            .filter((x) => !cs.some((y) => y.code === x.code))
+                    );
                     setCourses(cs);
                 });
             });

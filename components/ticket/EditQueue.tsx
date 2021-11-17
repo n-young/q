@@ -1,10 +1,10 @@
 import React from "react";
-import moment from "moment";
+import moment from "moment-timezone";
 import Modal from "react-modal";
 import { doc } from "firebase/firestore";
 import { useDocumentData } from "react-firebase-hooks/firestore";
 import { firestore } from "../../util/firebase";
-import { dtformat, modalStyle, nextNHours } from "../../util/constants";
+import { dtformat, modalStyle, nextNHours, timezone } from "../../util/constants";
 import { setQueue } from "../../util/db";
 import styles from "./Ticket.module.css";
 
@@ -70,7 +70,7 @@ function EditQueueModal({ isOpen, closeModal, qid }: EditQueueModalProps) {
                     <option value={-1} disabled selected></option>
                     {times.map((y, i) => (
                         <option value={i} key={i}>
-                            {y.format(dtformat)}
+                            {moment.tz(y, timezone).format(dtformat)}
                         </option>
                     ))}
                 </select>
