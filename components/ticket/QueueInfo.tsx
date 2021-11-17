@@ -20,7 +20,7 @@ export default function QueueInfo({ queue, user, isTa }: QueueInfoProps) {
     );
     const tickets = useQueueTickets(queue);
     const isSignedUp = tickets.some((x: any) => x?.studentId === user?.uid);
-    const ended = queue.endTime < new Date();
+    const ended = moment.tz(moment.utc(queue.endTime.toDate()), timezone).toDate() < new Date();
 
     if (loading || !course || !queue || !queue.tickets) return <></>;
 
