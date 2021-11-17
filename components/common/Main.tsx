@@ -18,6 +18,7 @@ export default function Main(props: any) {
                 <main className={styles.main}>{props.children}</main>
                 <Footer />
             </div>
+            <div id="modal"></div>
         </>
     );
 }

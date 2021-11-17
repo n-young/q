@@ -13,8 +13,7 @@ export default function MTAPanel() {
     );
 
     const DropDown = () => (
-        <select value={cid} onChange={(e) => setCid(e.target.value)}>
-            <option disabled value={""}></option>
+        <select value={cid} defaultValue={""} onChange={(e) => setCid(e.target.value)}>
             {!loading &&
                 courses &&
                 courses?.map((x) => <option value={x.id} key={x.id}>{x.code}</option>)}

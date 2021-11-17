@@ -20,6 +20,7 @@ function TAModal({ isOpen, closeModal, isHTA, cid }: TAModalProps) {
             onRequestClose={closeModal}
             style={modalStyle}
             contentLabel="Create a new TA"
+            ariaHideApp={false}
         >
             <h2>Add a {isHTA ? "HTA" : "TA"}</h2>
             <form

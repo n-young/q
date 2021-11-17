@@ -18,6 +18,7 @@ function CourseModal({ isOpen, closeModal }: CourseModalProps) {
             onRequestClose={closeModal}
             style={modalStyle}
             contentLabel="Create a new Course"
+            ariaHideApp={false}
         >
             <h2>Create a New Course</h2>
             <form

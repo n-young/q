@@ -18,7 +18,8 @@ export default function QueueIcon({
     const [course, loading, error] = useDocumentData(
         doc(firestore, "courses", queue.course || "dummy")
     );
-    const ended = moment.tz(moment.utc(queue.endTime), timezone).toDate() < new Date();
+    const ended =
+        moment.tz(moment.utc(queue.endTime), timezone).toDate() < new Date();
 
     return !loading && course ? (
         <div

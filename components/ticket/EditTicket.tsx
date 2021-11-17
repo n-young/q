@@ -38,6 +38,7 @@ function EditTicketModal({ isOpen, closeModal, tid }: EditTicketModalProps) {
             onRequestClose={closeModal}
             style={modalStyle}
             contentLabel="Edit Ticket"
+            ariaHideApp={false}
         >
             <h2>Edit Ticket</h2>
             <form className={styles.form} onSubmit={(e) => e.preventDefault()}>

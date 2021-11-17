@@ -8,8 +8,7 @@ export default function HTAPanel() {
     const courses = useHtaCourses();
 
     const DropDown = () => (
-        <select value={cid} onChange={(e) => setCid(e.target.value)}>
-            <option disabled value={""}></option>
+        <select value={cid} defaultValue={""} onChange={(e) => setCid(e.target.value)}>
             {courses.map((x) => (
                 <option value={x.id} key={x.id}>
                     {x.code}

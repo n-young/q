@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import moment from "moment-timezone";
 import Modal from "react-modal";
 import { doc } from "firebase/firestore";
@@ -26,29 +26,45 @@ function EditQueueModal({ isOpen, closeModal, qid }: EditQueueModalProps) {
     const [location, setLocation] = useState(queue?.location);
     const [zoomLink, setZoomLink] = useState(queue?.zoomLink);
     const [endTime, setEndTime] = useState(-1);
+    const [loaded, setLoaded] = useState(false);
     const times = nextNHours(12);
+
+    useEffect(() => {
+        if (!loading && queue && !loaded) {
+            setTitle(queue.title);
+            setLocation(queue.location);
+            setZoomLink(queue.zoomLink);
+            setLoaded(true);
+        }
+    }, [queue, loading, times, loaded]);
 
     const setNewQueue = (newQueue: any) => {
         const toset = {
             ...queue,
             ...newQueue,
         };
-        setQueue(
-            toset.id,
-            toset.course,
-            toset.title,
-            toset.location,
-            toset.zoomLink,
-            toset.endTime.toDate()
-        );
+
+        if (queue)
+            setQueue(
+                toset.id,
+                toset.course,
+                toset.title,
+                toset.location,
+                toset.zoomLink,
+                toset.endTime.toDate()
+            );
     };
 
     return !loading && queue ? (
         <Modal
             isOpen={isOpen}
-            onRequestClose={closeModal}
+            onRequestClose={() => {
+                closeModal();
+                setLoaded(false);
+            }}
             style={modalStyle}
             contentLabel="Edit Queue"
+            ariaHideApp={false}
         >
             <h2>Edit Queue</h2>
             <form className={styles.form} onSubmit={(e) => e.preventDefault()}>
@@ -69,10 +85,10 @@ function EditQueueModal({ isOpen, closeModal, qid }: EditQueueModalProps) {
                 />
                 <label>End time:</label>
                 <select
+                defaultValue={-1}
                     onChange={(x) => setEndTime(parseInt(x.target.value, 10))}
                     required
                 >
-                    <option value={-1} disabled selected></option>
                     {times.map((y, i) => (
                         <option value={i} key={i}>
                             {moment.tz(y, timezone).format(dtformat)}
@@ -80,14 +96,16 @@ function EditQueueModal({ isOpen, closeModal, qid }: EditQueueModalProps) {
                     ))}
                 </select>
                 <button
-                    onClick={(_) =>
+                    onClick={(_) => {
+                        console.log(times);
+                        console.log(endTime);
                         setNewQueue({
                             title: title,
                             location: location,
                             zoomLink: zoomLink,
                             endTime: times[endTime],
-                        })
-                    }
+                        });
+                    }}
                 >
                     Save Queue
                 </button>

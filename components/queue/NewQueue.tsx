@@ -28,11 +28,12 @@ function QueueModal({ isOpen, closeModal }: QueueModalProps) {
     };
 
     return (
-        <Modal
+        <Modal 
             isOpen={isOpen}
             onRequestClose={closeModal}
             style={modalStyle}
             contentLabel="Create a new Queue"
+            ariaHideApp={false}
         >
             <h2>Create a New Queue</h2>
             <form
@@ -52,10 +53,10 @@ function QueueModal({ isOpen, closeModal }: QueueModalProps) {
                     <label>Course: </label>
                     <select
                         value={course}
+                        defaultValue={""}
                         onChange={(x) => setCourse(x.target.value)}
                         required
                     >
-                        <option disabled value={""}></option>
                         {courses.map((x) => (
                             <option value={x.id} key={x.id}>
                                 {x.code}
@@ -83,12 +84,12 @@ function QueueModal({ isOpen, closeModal }: QueueModalProps) {
                     <label>End Time: </label>
                     <select
                         value={endTime}
+                        defaultValue={-1}
                         onChange={(x) =>
                             setEndTime(parseInt(x.target.value, 10))
                         }
                         required
                     >
-                        <option value={-1} disabled selected></option>
                         {times.map((y, i) => (
                             <option value={i} key={i}>
                                 {moment.tz(y, timezone).format(dtformat)}
@@ -100,8 +101,6 @@ function QueueModal({ isOpen, closeModal }: QueueModalProps) {
             </form>
         </Modal>
     );
-
-    return <></>;
 }
 
 export default function NewQueue() {
@@ -117,8 +116,11 @@ export default function NewQueue() {
                 className={`${styles.queueHolder} ${styles.newQueueHolder}`}
                 onClick={() => setIsOpen(true)}
             >
-                <h2>New Queue</h2>
+                <h2 className={styles.courseTitle}>New Queue</h2>
+            <div className={styles.queueInfo}>
                 <p>Create a new queue.</p>
+                <p></p>
+            </div>
             </div>
         </>
     );

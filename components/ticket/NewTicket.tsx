@@ -22,6 +22,7 @@ function TicketModal({ ended, isOpen, closeModal, qid }: TicketModalProps) {
             onRequestClose={closeModal}
             style={modalStyle}
             contentLabel="Join the Queue"
+            ariaHideApp={false}
         >
             <h2>Join the Queue</h2>
             <form
